@@ -4,7 +4,7 @@ Author: Silas<br>
 Deep Learning Library: Tensorflow (Google)
 
 ## How to Use
-- create new virtual environment, install dependencies (requirements.txt to follow)
+- create new virtual environment, install dependencies from requirements.txt
 - create a new empty folder MNIST_data (will change soon, will need to provide data from assignment)
 - run multilayer_perceptron.py from virtualenv, will train and evaluate the model with a fixed set of hyperparameters
 
