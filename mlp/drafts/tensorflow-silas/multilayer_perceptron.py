@@ -7,13 +7,18 @@ mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 
 # --- Hyperparameters --- #
-
 num_epochs = 30
-batch_size = 100
 learning_rate = 0.01
-
-size_input_layer = 784  # dimension of a flattened MNIST image
 size_hidden_layer = 50
+
+
+# --- Other Parameters --- #
+batch_size = 100  # set to 1 for single-sample training
+random_seed = 101  # used for all random initializations, to get reproducible results
+
+
+# --- Fixed Parameters --- #
+size_input_layer = 784  # dimension of a flattened MNIST image
 size_output_layer = 10  # one-hot output vector with 10 classes
 
 
@@ -23,11 +28,11 @@ size_output_layer = 10  # one-hot output vector with 10 classes
 # MNIST image, num rows will later be defined by batch size (None for now)
 x = tf.placeholder(tf.float32, [None, size_input_layer])
 
-W_1 = tf.Variable(tf.random_uniform([size_input_layer, size_hidden_layer]))  # weights input to hidden
-b_1 = tf.Variable(tf.random_uniform([size_hidden_layer]))  # biases hidden
+W_1 = tf.Variable(tf.random_uniform([size_input_layer, size_hidden_layer], seed=random_seed))  # weights input to hidden
+b_1 = tf.Variable(tf.random_uniform([size_hidden_layer], seed=random_seed))  # biases hidden
 
-W_2 = tf.Variable(tf.random_uniform([size_hidden_layer, size_output_layer]))  # weights hidden to output
-b_2 = tf.Variable(tf.random_uniform([size_output_layer]))  # biases output
+W_2 = tf.Variable(tf.random_uniform([size_hidden_layer, size_output_layer], seed=random_seed))  # weights hidden to output
+b_2 = tf.Variable(tf.random_uniform([size_output_layer], seed=random_seed))  # biases output
 
 # Matrix with dimension [batch_size x size_hidden_layer], each row represents the hidden layer for one input row.
 # Use softmax as activation function.
