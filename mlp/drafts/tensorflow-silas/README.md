@@ -5,15 +5,8 @@ Deep Learning Library: Tensorflow (Google)
 
 ## How to Use
 - create new virtual environment, install dependencies from requirements.txt
-- create a new empty folder MNIST_data (will change soon, will need to provide data from assignment)
+- create a new folder "data" containing the MNIST data files "train.csv" and "test.csv"
 - run multilayer_perceptron.py from virtualenv, will train and evaluate the model with a fixed set of hyperparameters
-
-## References
-This prototype is based on the following resources:
-
-- [Tensorflow: MNIST for ML Beginners](https://www.tensorflow.org/versions/r1.1/get_started/mnist/beginners)
-- [Siraj Raval: Tensorflow in 5 Minutes (YouTube)](https://www.youtube.com/watch?v=2FmcHiLCwTU)
-- [Analytics Vidhya](https://www.analyticsvidhya.com/blog/2016/10/an-introduction-to-implementing-neural-networks-using-tensorflow/)
 
 ## About Tensorflow
 Tensorflow is a library for numerical computation using data flow graphs. It is built to scale and can run operations on both the CPU and the GPU. Tensorflow is currently one of the most widely used deep learning libraries in research and industry.
@@ -25,3 +18,10 @@ Graphs are lazy-evaluated. That is, we first construct the graph, at which point
 Behind the scenes, Tensorflow always has a default graph. That means, if we create a new node (variable, placeholder, other operation, ...) in our code, this node is added to the default graph. Not all nodes in a graph need to be connected. We can also work on multiple graphs and set a different graph as default, which means newly created operations will be added to that graph instead.
 
 In summary, Tensorflow is primarily a library for numerical computations. However, it also includes many functions that are handy for machine learning purposes, such as the sigmoid function and the Gradient Descent optimizer.
+
+## References
+This prototype is based on the following resources:
+
+- [Tensorflow: MNIST for ML Beginners](https://www.tensorflow.org/versions/r1.1/get_started/mnist/beginners)
+- [Siraj Raval: Tensorflow in 5 Minutes (YouTube)](https://www.youtube.com/watch?v=2FmcHiLCwTU)
+- [Analytics Vidhya](https://www.analyticsvidhya.com/blog/2016/10/an-introduction-to-implementing-neural-networks-using-tensorflow/)
