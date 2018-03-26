@@ -23,7 +23,7 @@ class RandomBatchFeeder():
     def next_batch(self, batch_size):
         """
         Creates a random batch of data, of size batch_size, and the corresponding labels.
-        Note: random selection happens in term of the previously defined random_seed
+        Note: random selection happens in terms of the previously defined random_seed
 
         :param batch_size:  desired size of the random batch, must not be larger than number of data points in
                             this container (i.e. batch_size <= data.shape[0])

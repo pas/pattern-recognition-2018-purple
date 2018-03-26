@@ -3,10 +3,6 @@ from data_loader import load_data
 from batch_feed import RandomBatchFeeder
 
 
-# From Tensorflow, will fetch MNIST data, save it to specified directory and provide easy-to-use batches
-# mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
-
-
 # --- Hyperparameters --- #
 num_epochs = 30
 learning_rate = 0.01
