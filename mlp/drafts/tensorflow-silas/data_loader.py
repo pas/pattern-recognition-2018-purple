@@ -2,7 +2,8 @@ import csv
 import numpy as np
 
 
-def load_data(path):
+def load_data(path, normalize=True):
+    print("loading data: {}".format(path))
     with open(path, "r") as file:
         data = []
         labels = []
@@ -10,7 +11,10 @@ def load_data(path):
         for line in csvfile:
             labels.append(line[0])
             data.append(line[1:])
-    return np.array(data, dtype=np.float32), labels_to_one_hot(labels)
+    data = np.array(data, dtype=np.float32)
+    if normalize:
+        data = data / 255
+    return data, labels_to_one_hot(labels)
 
 
 def labels_to_one_hot(labels):

@@ -1,9 +1,11 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
+from data_loader import load_data
+from batch_feed import RandomBatchFeeder
 
 
 # From Tensorflow, will fetch MNIST data, save it to specified directory and provide easy-to-use batches
-mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
+# mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 
 # --- Hyperparameters --- #
@@ -22,17 +24,22 @@ size_input_layer = 784  # dimension of a flattened MNIST image
 size_output_layer = 10  # one-hot output vector with 10 classes
 
 
+train_x, train_y = load_data("data/train.csv")
+train_data_feeder = RandomBatchFeeder(train_x, train_y, random_seed)
+test_x, test_y = load_data("data/test.csv")
+
 # --- Model Architecture --- #
+tf.set_random_seed(random_seed)
 
 # placeholder for input value batches: each row will contain one (flattened)
 # MNIST image, num rows will later be defined by batch size (None for now)
 x = tf.placeholder(tf.float32, [None, size_input_layer])
 
-W_1 = tf.Variable(tf.random_uniform([size_input_layer, size_hidden_layer], seed=random_seed))  # weights input to hidden
-b_1 = tf.Variable(tf.random_uniform([size_hidden_layer], seed=random_seed))  # biases hidden
+W_1 = tf.Variable(tf.random_uniform([size_input_layer, size_hidden_layer]))  # weights input to hidden
+b_1 = tf.Variable(tf.random_uniform([size_hidden_layer]))  # biases hidden
 
-W_2 = tf.Variable(tf.random_uniform([size_hidden_layer, size_output_layer], seed=random_seed))  # weights hidden to output
-b_2 = tf.Variable(tf.random_uniform([size_output_layer], seed=random_seed))  # biases output
+W_2 = tf.Variable(tf.random_uniform([size_hidden_layer, size_output_layer]))  # weights hidden to output
+b_2 = tf.Variable(tf.random_uniform([size_output_layer]))  # biases output
 
 # Matrix with dimension [batch_size x size_hidden_layer], each row represents the hidden layer for one input row.
 # Use softmax as activation function.
@@ -67,11 +74,11 @@ tf.global_variables_initializer().run()
 # Learning process: for num_epochs, run data in num_batches many batches and minimize cost_function
 for epoch in range(num_epochs):
     total_loss = 0
-    num_batches = int(mnist.train.num_examples / batch_size)
+    num_batches = int(train_x.shape[0] / batch_size)
 
     # for every batch, run optimizer, total loss for that batch
     for i in range(num_batches):
-        batch_xs, batch_ys = mnist.train.next_batch(batch_size)  # get next input- and labels batch
+        batch_xs, batch_ys = train_data_feeder.next_batch(batch_size)  # get next input- and labels batch
         sess.run(optimizer, feed_dict={x: batch_xs, y_labels: batch_ys})  # run optimizer for new batch
 
         # calculate loss of that batch, just as a reference
@@ -94,5 +101,5 @@ correct_prediction = tf.equal(tf.argmax(output_layer, 1), tf.argmax(y_labels, 1)
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 # run this eval on the MNIST test set and test labels and print result
-print(sess.run(accuracy, feed_dict={x: mnist.test.images, y_labels: mnist.test.labels}))
+print(sess.run(accuracy, feed_dict={x: test_x, y_labels: test_y}))
 
