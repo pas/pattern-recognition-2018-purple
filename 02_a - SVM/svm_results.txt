@@ -1,0 +1,189 @@
+SVM Execution Results
+
+---------------------------------
+svm.SVC(kernel='linear', C = 100.0)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  5835  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  734410  ms
+Accuracy:  0.9080727951469902
+Application finished in :  829395  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 10.0)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  5689  ms. 
+Starting with model generation.
+Calculations finished. Time taken for calculations:  748576  ms
+Accuracy:  0.9080727951469902
+Application finished in :  846331  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 1.0)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  5719  ms. 
+Starting with model generation.
+Calculations finished. Time taken for calculations:  734212  ms
+Accuracy:  0.9080727951469902
+Application finished in :  831147  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.1)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  5720  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  906355  ms
+Accuracy:  0.9078728084794347
+Application finished in :  999664  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.01)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  5901  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  407758  ms
+Accuracy:  0.9091393907072862
+Application finished in :  496347  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  5753  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  156284  ms
+Accuracy:  0.9124725018332112
+Application finished in :  242509  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.0001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  6180  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  113560  ms
+Accuracy:  0.92273848410106
+Application finished in :  207055  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.00001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  5830  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  103143  ms
+Accuracy:  0.9318045463635758
+Application finished in :  225293  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.000001)****
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  5957  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  108735  ms
+Accuracy:  0.9429371375241651
+Application finished in :  235561  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.0000001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  6086  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  165584  ms
+Accuracy:  0.9345376974868342
+Application finished in :  347213  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 1.0, decision_function_shape='ovo')
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  6364  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  883580  ms
+Accuracy:  0.9080727951469902
+Application finished in :  1000907  ms
+---------------------------------
+
+---------------------------------
+---------------------------------
+---------------------------------
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='rbf', gamma=0.0000001, C = 1.0)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  6189  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  457154  ms
+Accuracy:  0.9649356709552697
+Application finished in :  725103  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='poly', gamma=0.001, C = 1.0)****
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  7125  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  291925  ms
+Accuracy:  0.972601826544897
+Application finished in :  565656  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='sigmoid', gamma=0.0000001, C = 1.0)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  10192  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  541864  ms
+Accuracy:  0.9102059862675822
+Application finished in :  788832  ms
+---------------------------------
+
