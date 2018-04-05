@@ -34,3 +34,53 @@ For cross-validation. This is the accuracy for validation set with 60 number of 
 For cross-validation. This is the accuracy for validation set with 40 number of epochs, learning rate 0.1 and 60 hidden layers:
 0.83626235
 
+For cross-validation. This is the accuracy for validation set with 40 number of epochs, learning rate 0.1 and 60 hidden layers:
+0.65537935
+
+For cross-validation. This is the accuracy for validation set with 30 number of epochs, learning rate 0.1 and 60 hidden layers:
+0.66366625
+
+For cross-validation. This is the accuracy for validation set with 60 number of epochs, learning rate 0.1 and 20 hidden layers:
+0.62937564
+
+For cross-validation. This is the accuracy for validation set with 100 number of epochs, learning rate 0.1 and 100 hidden layers:
+0.28361195
+
+For cross-validation. This is the accuracy for validation set with 100 number of epochs, learning rate 0.01 and 20 hidden layers:
+0.9181312
+
+For cross-validation. This is the accuracy for validation set with 50 number of epochs, learning rate 0.01 and 20 hidden layers:
+0.8742222
+
+For cross-validation. This is the accuracy for validation set with 20 number of epochs, learning rate 0.01 and 20 hidden layers:
+0.8791111
+
+For cross-validation. This is the accuracy for validation set with 20 number of epochs, learning rate 0.01 and 20 hidden layers:
+0.8791111
+
+For cross-validation. This is the accuracy for validation set with 20 number of epochs, learning rate 0.01 and 20 hidden layers:
+0.8802963
+
+For cross-validation. This is the accuracy for validation set with 20 number of epochs, learning rate 0.01 and 20 hidden layers:
+0.841458
+
+For cross-validation. This is the accuracy for validation set with 20 number of epochs, learning rate 0.01 and 20 hidden layers:
+0.88592595
+
+For cross-validation. This is the accuracy for validation set with 5 number of epochs, learning rate 0.01 and 20 hidden layers:
+0.690963
+
+For cross-validation. This is the accuracy for validation set with 5 number of epochs, learning rate 0.01 and 20 hidden layers:
+0.690963
+
+For cross-validation. This is the accuracy for validation set with 5 number of epochs, learning rate 0.01 and 20 hidden layers:
+0.690963
+
+For cross-validation. This is the accuracy for validation set with 5 number of epochs, learning rate 0.01 and 20 hidden layers:
+For cross-validation. This is the accuracy for validation set with 5 number of epochs, learning rate 0.01 and 20 hidden layers:
+For cross-validation. This is the accuracy for validation set with 5 number of epochs, learning rate 0.01 and 20 hidden layers:
+0
+
+For cross-validation. This is the accuracy for validation set with 5 number of epochs, learning rate 0.01 and 20 hidden layers:
+0.690963
+

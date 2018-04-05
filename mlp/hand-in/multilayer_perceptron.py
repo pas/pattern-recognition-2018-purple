@@ -1,133 +1,240 @@
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import numpy as numpy
+import sys
+import getopt
+import csv as csv
+
 from data_loader import load_data
 from batch_feed import RandomBatchFeeder
 
+try:
+  opts, args = getopt.getopt(sys.argv[1:], "he:r:l:f:", ["help","test_file","num_epochs=","learning_rate=","num_folds="])
+except getopt.GetoptError:
+  print getopt.GetoptError.msg
+  print 'multilayer_perceptron.py -e <number of Epochs> -r <learning Rate> -l <number of hidden Layers> -f <Number of folds>'
+  sys.exit(2)
 
-# --- Hyperparameters --- #
-num_epochs = 40
-learning_rate = 0.1
-size_hidden_layer = 60
+for opt, arg in opts:
+  if opt in ("-h", "--help"):
+    print 'multilayer_perceptron.py -e <number of Epochs> -r <learning Rate> -l <number of hidden Layers> -f <Fold number>'
+    sys.exit()
+  elif opt in ("-e", "--num_epochs"):
+    num_epochs = int(arg)
+  elif opt in ("-r", "--learning_rate"):
+    learning_rate = float(arg)
+  elif opt in ("-l", "--num_hidden_layers"):
+    size_hidden_layer = int(arg)
+  elif opt in ("-l", "--num_hidden_layers"):
+    size_hidden_layer = int(arg)
+  elif opt in ("-f", "--num_folds"):
+    num_folds = int(arg)
 
+print 'Number of epochs: ', num_epochs
+print 'Learning rate: ', learning_rate
+print 'Number of hidden layers: ', size_hidden_layer
+print 'Number of folds: ', num_folds
 
-# --- Other Parameters --- #
-batch_size = 100  # set to 1 for single-sample training
-random_seed = 101  # used for all random initializations, to get reproducible results
+class Train:
 
+  # --- Hyperparameters --- #
+  num_epochs = 40
+  learning_rate = 0.1
+  size_hidden_layer = 60
+  leave_out_fold = 0
+  validation_file = "data/valid.csv"
 
-# --- Fixed Parameters --- #
-size_input_layer = 784  # dimension of a flattened MNIST image
-size_output_layer = 10  # one-hot output vector with 10 classes
+  # necessary arrays to make the plot of the error-rate on training and validation set wirth respect to the number of training epochs
+  training_epochs = [] # stores the number of epoche
+  accurancy_train_set = []
+  accurancy_valid_set = []
+  
+  # final accuracy test with the validation set
+  final_accuracy = 0
+  
+  # Current session
+  sess = ""
 
+  def __init__(self, num_epochs,  learning_rate, size_hidden_layer, leave_out_fold):
+    self.num_epochs = num_epochs
+    self.learning_rate = learning_rate
+    self.size_hidden_layer = size_hidden_layer
+    self.leave_out_fold = leave_out_fold
 
-train_x, train_y = load_data("data/train.csv") # first 20'000 lines of origin train set
-train_data_feeder = RandomBatchFeeder(train_x, train_y, random_seed)
-test_x, test_y = load_data("data/test.csv")
-valid_x, valid_y = load_data("data/valid.csv") # last 6'999 lines of origin train set
+  def start( self ):
+    # is this really a good idea? Should we not repeatedly do the initialization and
+    # then take the mean?
+    random_seed = 101  # used for all random initializations, to get reproducible results
 
-# --- Model Architecture --- #
-tf.set_random_seed(random_seed)
+    # This part expects that ther256e are files in the folds it loads the files except the left out
+    # given as parameter
 
-# placeholder for input value batches: each row will contain one (flattened)
-# MNIST image, num rows will later be defined by batch size (None for now)
-x = tf.placeholder(tf.float32, [None, size_input_layer])
+    train_x = numpy.array([])
+    train_y = numpy.array([])
+    empty = True
 
-W_1 = tf.Variable(tf.random_uniform([size_input_layer, size_hidden_layer]))  # weights input to hidden
-b_1 = tf.Variable(tf.random_uniform([size_hidden_layer]))  # biases hidden
+    for fold in range(0,4):
+      fold_file = "folds/fold-"+str(fold)+".csv"
+      
+      if( fold != self.leave_out_fold ):
+        current_x, current_y = load_data( fold_file )
+        
+        # Couldn't find a better solution to make this more slick
+        if( empty ):
+          train_x = current_x
+          train_y = current_y
+          empty = False
+        else:
+          train_x = numpy.concatenate( (train_x, current_x) , axis=0)
+          train_y = numpy.concatenate( (train_y, current_y) , axis=0)
+      else:
+        sys.stdout.write( "Testing fold ---> " )
+        test_x, test_y = load_data( fold_file )
 
-W_2 = tf.Variable(tf.random_uniform([size_hidden_layer, size_output_layer]))  # weights hidden to output
-b_2 = tf.Variable(tf.random_uniform([size_output_layer]))  # biases output
+    valid_x, valid_y = load_data( self.validation_file ) # last 6'999 lines of origin train set
+    
+    self.__learn( random_seed , train_x , train_y , test_x , test_y , valid_x , valid_y )
 
-# Matrix with dimension [batch_size x size_hidden_layer], each row represents the hidden layer for one input row.
-# Use softmax as activation function.
-hidden_layer = tf.nn.softmax(tf.matmul(x, W_1) + b_1)
+    # for cross-validation: stores the plot of error-rate on training and validation set with respect to training epochs
+    self.training_epochs = numpy.array( self.training_epochs ) # change List to Array
+    self.accurancy_train_set = numpy.array(self.accurancy_train_set)
+    self.accurancy_valid_set = numpy.array(self.accurancy_valid_set)
+    
+    self.__write_to_file()
+    self.__plot()
 
-# Matrix with dimension [batch_size x size_output_layer], each row represents the output layer for one input row.
-# Use softmax as activation function.
-output_layer = tf.nn.softmax(tf.matmul(hidden_layer, W_2) + b_2)
+    # run this eval on the MNIST test set and test labels and print result
+    print("This is the final accuracy for test set after the whole procedure. This value has only to be read in the end for the optimized parameters.")
+    print( self.final_accuracy )
 
+  ##
+  #
+  # Starts the learning phase
+  #
+  ##
+  def __learn( self, random_seed , train_x , train_y , test_x, test_y, valid_x , valid_y ):
+    train_data_feeder = RandomBatchFeeder(train_x, train_y, random_seed)
+    
+    # --- Other Parameters --- #
+    batch_size = 100  # set to 1 for single-sample training
+    
+    # --- Fixed Parameters --- #
+    size_input_layer = 784  # dimension of a flattened MNIST image
+    size_output_layer = 10  # one-hot output vector with 10 classes
+    
+    # --- Model Architecture --- #
+    tf.set_random_seed(random_seed)
 
-# --- Learning --- #
+    # placeholder for input value batches: each row will contain one (flattened)
+    # MNIST image, num rows will later be defined by batch size (None for now)
+    x = tf.placeholder(tf.float32, [None, size_input_layer])
 
-# Matrix with dimension [batch_size x size_output_layer], each line contains a one-hot encoded class label
-# for one input row
-y_labels = tf.placeholder(tf.float32, [None, size_output_layer])
+    W_1 = tf.Variable(tf.random_uniform([size_input_layer, self.size_hidden_layer]))  # weights input to hidden
+    b_1 = tf.Variable(tf.random_uniform([self.size_hidden_layer]))  # biases hidden
 
-# Cross-entropy cost, total loss for one input-batch
-cost_function = -tf.reduce_sum(y_labels * tf.log(output_layer))
+    W_2 = tf.Variable(tf.random_uniform([self.size_hidden_layer, size_output_layer]))  # weights hidden to output
+    b_2 = tf.Variable(tf.random_uniform([size_output_layer]))  # biases output
 
-# Gradient descent optimizer, will minimize cost_function at learning_rate by optimizing all variables
-# in the connected Tensorflow graph of cost_function (or all vars in the default graph? Not sure...)
-optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost_function)
+    # Matrix with dimension [batch_size x size_hidden_layer], each row represents the hidden layer for one input row.
+    # Use softmax as activation function.
+    hidden_layer = tf.nn.softmax(tf.matmul(x, W_1) + b_1)
 
-# Tensorflow graph evaluation session - interactive session: installs itself as default session for run operations,
-# to avoid having to pass an explicit session object (not needed, but convenient for this prototype)
-sess = tf.InteractiveSession()
+    # Matrix with dimension [batch_size x size_output_layer], each row represents the output layer for one input row.
+    # Use softmax as activation function.
+    output_layer = tf.nn.softmax(tf.matmul(hidden_layer, W_2) + b_2)
 
-# Initialize all variables in this Tensorflow graph (boilerplate, always done before graph evaluation)
-# -> tf.global_variables_initializer() is a TF graph node and must be run by the session (here, sess as default)
-tf.global_variables_initializer().run()
+    # --- Learning --- #
 
-# --- Error Rate plot
-# necessary arrays to make the plot of the error-rate on training and validation set wirth respect to the number of training epochs
-training_epochs = [] # stores the number of epoche
-accurancy_train_set = []
-accurancy_valid_set = []
+    # Matrix with dimension [batch_size x size_output_layer], each line contains a one-hot encoded class label
+    # for one input row
+    y_labels = tf.placeholder(tf.float32, [None, size_output_layer])
 
-# --- Model Evaluation ---
-# define model evaluation before learing so it can be used for cross-validation
+    # Cross-entropy cost, total loss for one input-batch
+    cost_function = -tf.reduce_sum(y_labels * tf.log(output_layer))
 
-# take argmax of each row of output layer matrix and each one-hot encoded label row (i.e. find index of highest neuron
-# in output layer for each input row -> is the prediction class for that input row), compare each element of these
-# vectors for equality
-correct_prediction = tf.equal(tf.argmax(output_layer, 1), tf.argmax(y_labels, 1))
+    # Gradient descent optimizer, will minimize cost_function at learning_rate by optimizing all variables
+    # in the connected Tensorflow graph of cost_function (or all vars in the default graph? Not sure...)
+    optimizer = tf.train.GradientDescentOptimizer( self.learning_rate ).minimize(cost_function)
 
-# cast resulting boolean vector to float32 vector (tf.cast()), and calculate mean of its entries (tf.reduce_mean()).
-# Matches in the casted equality vector are 1, mismatches are 0, mean is percentage of correct predictions.
-# Cast from bool to numeric value is necessary to compute mean, use float32 to avoid rounding errors
-accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+    # Tensorflow graph evaluation session - interactive session: installs itself as default session for run operations,
+    # to avoid having to pass an explicit session object (not needed, but convenient for this prototype)
+    self.sess = tf.InteractiveSession()
 
+    # Initialize all variables in this Tensorflow graph (boilerplate, always done before graph evaluation)
+    # -> tf.global_variables_initializer() is a TF graph node and must be run by the session (here, sess as default)
+    tf.global_variables_initializer().run()
 
-# Learning process: for num_epochs, run data in num_batches many batches and minimize cost_function
-for epoch in range(num_epochs):
-    total_loss = 0
-    num_batches = int(train_x.shape[0] / batch_size)
-    training_epochs.append(epoch)
-    # for every batch, run optimizer, total loss for that batch
-    for i in range(num_batches):
-        batch_xs, batch_ys = train_data_feeder.next_batch(batch_size)  # get next input- and labels batch
-        sess.run(optimizer, feed_dict={x: batch_xs, y_labels: batch_ys})  # run optimizer for new batch
+    # --- Model Evaluation ---
+    # define model evaluation before learing so it can be used for cross-validation
 
-        # calculate loss of that batch, just as a reference
-        total_loss += sess.run(cost_function, feed_dict={x: batch_xs, y_labels: batch_ys})
+    # take argmax of each row of output layer matrix and each one-hot encoded label row (i.e. find index of highest neuron
+    # in output layer for each input row -> is the prediction class for that input row), compare each element of these
+    # vectors for equality
+    correct_prediction = tf.equal(tf.argmax(output_layer, 1), tf.argmax(y_labels, 1))
 
-    # print the accuracy on training and validation set after each training epoch
-    # and store it in an array
-    accurancy_train_set.append(sess.run(accuracy, feed_dict={x: train_x, y_labels: train_y}))
-    accurancy_valid_set.append(sess.run(accuracy, feed_dict={x: valid_x, y_labels: valid_y}))
+    # cast resulting boolean vector to float32 vector (tf.cast()), and calculate mean of its entries (tf.reduce_mean()).
+    # Matches in the casted equality vector are 1, mismatches are 0, mean is percentage of correct predictions.
+    # Cast from bool to numeric value is necessary to compute mean, use float32 to avoid rounding errors
+    accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
-    # print average loss over all batches in that epoch, as a reference
-    print("Epoch {} complete, loss={}".format(epoch + 1, total_loss/num_batches))
+    # Learning process: for num_epochs, run data in num_batches many batches and minimize cost_function
+    for epoch in range( self.num_epochs ):
+        total_loss = 0
+        num_batches = int(train_x.shape[0] / batch_size)
+        self.training_epochs.append(epoch)
+        
+        # for every batch, run optimizer, total loss for that batch
+        for i in range(num_batches):
+            batch_xs, batch_ys = train_data_feeder.next_batch(batch_size)  # get next input- and labels batch
+            
+            # Optimize model with the current batch
+            self.sess.run(optimizer, feed_dict={x: batch_xs, y_labels: batch_ys})  
 
-# for cross-validation: stores the plot of error-rate on training and validation set with respect to training epochs
-training_epochs = numpy.array(training_epochs) # change List to Array
-accurancy_train_set = numpy.array(accurancy_train_set)
-accurancy_valid_set = numpy.array(accurancy_valid_set)
-plt.plot(training_epochs, accurancy_train_set, label='accuracy for train set'.format(i=1))
-plt.plot(training_epochs, accurancy_valid_set, label='accuracy for validation set'.format(i=2))
-plt.legend(loc='best')
-plt.xlabel('training epoch number')
-plt.suptitle('Plot with learning rate ' + str(learning_rate) + " and " + str(size_hidden_layer) + " hidden layers.")
-print("Plot with error-rate of training and validation set depending on training epoch is made (for cross-validation).")
-plt.savefig('Plot with learning rate ' + str(learning_rate) + " and " + str(size_hidden_layer) + " hidden layers.")
+            # calculate loss of that batch, just as a reference
+            total_loss += self.sess.run(cost_function, feed_dict={x: batch_xs, y_labels: batch_ys})
 
-# for cross-validation: store learning rate, number of hidden layers and accurancy of validation set in txt file
-file = open("cross-validation values.txt", "a")
-file.write("For cross-validation. This is the accuracy for validation set with " + str(num_epochs) + " number of epochs, learning rate " + str(learning_rate) + " and " + str(size_hidden_layer) + " hidden layers:\n")
-file.write(str(sess.run(accuracy, feed_dict={x: valid_x, y_labels: valid_y}))+ "\n\n")
-file.close()
+        # print the accuracy on training and validation set after each training epoch
+        # and store it in an array
+        self.accurancy_train_set.append(self.sess.run(accuracy, feed_dict={x: train_x, y_labels: train_y}))
+        self.accurancy_valid_set.append(self.sess.run(accuracy, feed_dict={x: test_x, y_labels: test_y}))
 
-# run this eval on the MNIST test set and test labels and print result
-print("This is the final accuracy for test set after the whole procedure. This value has only to be read in the end for the optimized parameters.")
-print(sess.run(accuracy, feed_dict={x: test_x, y_labels: test_y}))
+        # print average loss over all batches in that epoch, as a reference
+        print("Epoch {} complete, loss={}".format(epoch + 1, total_loss/num_batches))
+        
+    # Test the final model with an unseen testing sample
+    self.final_accuracy = self.sess.run(accuracy, feed_dict={x: valid_x, y_labels: valid_y})
+
+  ##
+  #
+  # Writes data to a csv file
+  #
+  ##
+  def __write_to_file( self ):
+    result_file = open("results/results-train.csv", "wb")
+    writer = csv.writer(result_file, delimiter=",")
+    writer.writerow( self.accurancy_train_set )
+    result_file.close()
+
+    result_file = open("results/results-test.csv", "wb")
+    writer = csv.writer(result_file, delimiter=",")
+    writer.writerow( self.accurancy_valid_set )
+    result_file.close()
+
+  ##
+  #
+  # Plots results
+  #
+  ##
+  def __plot( self ):
+    plt.plot(self.training_epochs, self.accurancy_train_set, label='accuracy for train set'.format(i=1))
+    plt.plot(self.training_epochs, self.accurancy_valid_set, label='accuracy for validation set (fold='+str(self.leave_out_fold)+')'.format(i=2))
+    plt.legend(loc='best')
+    plt.xlabel('training epoch number')
+    plt.suptitle('Plot with learning rate ' + str( self.learning_rate ) + " and " + str(self.size_hidden_layer) + " hidden layers.")
+    print("Plot with error-rate of training and validation set depending on training epoch is made (for cross-validation).")
+    plt.savefig('Plot with learning rate ' + str( self.learning_rate ) + " and " + str(self.size_hidden_layer) + " hidden layers fold " + str(self.leave_out_fold) + ".")
+    
+for leave_out_fold in range(0, num_folds):
+  train = Train(num_epochs, learning_rate, size_hidden_layer, leave_out_fold)
+  train.start()
+
