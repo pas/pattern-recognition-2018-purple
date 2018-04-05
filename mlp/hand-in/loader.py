@@ -34,6 +34,6 @@ class Loader:
     return (train_x, train_y, test_x, test_y)
     
   def from_files( self , train_file_str , test_file_str ):
-    train_x, train_y = load_data( train_file )
-    test_x, test_y = load_data( test_file )
+    train_x, train_y = load_data( train_file_str )
+    test_x, test_y = load_data( test_file_str )
     return (train_x, train_y, test_x, test_y)

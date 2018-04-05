@@ -91,6 +91,7 @@ class Train:
     # Matrix with dimension [batch_size x size_output_layer], each line contains a one-hot encoded class label
     # for one input row
     y_labels = tf.placeholder(tf.float32, [None, size_output_layer])
+    self.y_labels = y_labels
 
     # Cross-entropy cost, total loss for one input-batch
     cost_function = -tf.reduce_sum(y_labels * tf.log(output_layer))
@@ -119,6 +120,7 @@ class Train:
     # Matches in the casted equality vector are 1, mismatches are 0, mean is percentage of correct predictions.
     # Cast from bool to numeric value is necessary to compute mean, use float32 to avoid rounding errors
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+    self.accuracy = accuracy
 
     # Learning process: for num_epochs, run data in num_batches many batches and minimize cost_function
     for epoch in range( self.num_epochs ):
@@ -144,6 +146,15 @@ class Train:
         # print average loss over all batches in that epoch, as a reference
         print("Epoch {} complete, loss={}".format(epoch + 1, total_loss/num_batches))
 
+  ##
+  # 
+  # Returns the current accuracy for the given test set
+  #
+  ##
+  def get_accuracy( self , test_x , test_y ) :
+    # return last element
+    return self.accurancy_valid_set[-1]
+    
   ##
   #
   # Writes data to a csv file
