@@ -4,6 +4,7 @@ import numpy as numpy
 import sys
 import getopt
 import csv as csv
+import os as os
 
 from data_loader import load_data
 from batch_feed import RandomBatchFeeder
@@ -30,36 +31,59 @@ for opt, arg in opts:
   elif opt in ("-f", "--num_folds"):
     num_folds = int(arg)
 
-print 'Number of epochs: ', num_epochs
-print 'Learning rate: ', learning_rate
-print 'Number of hidden layers: ', size_hidden_layer
-print 'Number of folds: ', num_folds
+##
+# Plotting full results
+##
+class PlotFull:
+  def __init__( self , num_epochs , learning_rate , size_hidden_layer , num_folds):    
+    test = numpy.genfromtxt('results/results-test.csv', delimiter=',')
+    mean_test = numpy.mean(test, axis=0)
+    stdev_test = test.std(0)
+    
+    train = numpy.genfromtxt('results/results-train.csv', delimiter=',')  
+    mean_train = numpy.mean(train, axis=0)     
+    
+    training_epochs = numpy.arange( 1, len(mean_train)+1 )
+    
+    plt.plot(training_epochs, mean_test, label='mean accuracy for test set'.format(i=1))
+    plt.plot(training_epochs, mean_train, label='mean accuracy for train set'.format(i=2))
+    plt.errorbar(training_epochs, mean_test, stdev_test, ecolor='grey', linestyle="None",  lw=1)
+    
+    plt.legend(loc='best')
+    plt.xlabel('training epoch number')
+    plt.suptitle('Plot of mean of all ' + str(num_folds) + ' folds with learning rate ' + str( learning_rate ) + " and " + str(size_hidden_layer) + " hidden layers.")
+    plt.savefig('plots/full/Plot with learning rate ' + str( learning_rate ) + " and " + str(size_hidden_layer) + " hidden layers with " + str(num_folds) + " folds.")
+    
+    result_file = open("results.csv", "ab")
+    writer = csv.writer(result_file, delimiter=",")
+    writer.writerow( mean_train )
+    writer.writerow( mean_test )
+    result_file.close()
+    
 
 class Train:
-
-  # --- Hyperparameters --- #
-  num_epochs = 40
-  learning_rate = 0.1
-  size_hidden_layer = 60
-  leave_out_fold = 0
-  validation_file = "data/valid.csv"
-
-  # necessary arrays to make the plot of the error-rate on training and validation set wirth respect to the number of training epochs
-  training_epochs = [] # stores the number of epoche
-  accurancy_train_set = []
-  accurancy_valid_set = []
-  
-  # final accuracy test with the validation set
-  final_accuracy = 0
-  
-  # Current session
-  sess = ""
-
   def __init__(self, num_epochs,  learning_rate, size_hidden_layer, leave_out_fold):
+    print 'Number of epochs: ', num_epochs
+    print 'Learning rate: ', learning_rate
+    print 'Number of hidden layers: ', size_hidden_layer
+    
     self.num_epochs = num_epochs
     self.learning_rate = learning_rate
     self.size_hidden_layer = size_hidden_layer
     self.leave_out_fold = leave_out_fold
+    
+    self.validation_file = "data/valid.csv"
+    
+    # final accuracy test with the validation set
+    self.final_accuracy = 0
+    
+    # necessary arrays to make the plot of the error-rate on training and validation set wirth respect to the number of training epochs
+    self.training_epochs = [] # stores the number of epoche
+    self.accurancy_train_set = []
+    self.accurancy_valid_set = []
+    
+    # Current session
+    self.sess = ""
 
   def start( self ):
     # is this really a good idea? Should we not repeatedly do the initialization and
@@ -210,12 +234,12 @@ class Train:
   #
   ##
   def __write_to_file( self ):
-    result_file = open("results/results-train.csv", "wb")
+    result_file = open("results/results-train.csv", "ab")
     writer = csv.writer(result_file, delimiter=",")
     writer.writerow( self.accurancy_train_set )
     result_file.close()
 
-    result_file = open("results/results-test.csv", "wb")
+    result_file = open("results/results-test.csv", "ab")
     writer = csv.writer(result_file, delimiter=",")
     writer.writerow( self.accurancy_valid_set )
     result_file.close()
@@ -223,6 +247,7 @@ class Train:
   ##
   #
   # Plots results
+  # We always write the same plot so all lines should be on one plot at the end
   #
   ##
   def __plot( self ):
@@ -232,9 +257,30 @@ class Train:
     plt.xlabel('training epoch number')
     plt.suptitle('Plot with learning rate ' + str( self.learning_rate ) + " and " + str(self.size_hidden_layer) + " hidden layers.")
     print("Plot with error-rate of training and validation set depending on training epoch is made (for cross-validation).")
-    plt.savefig('Plot with learning rate ' + str( self.learning_rate ) + " and " + str(self.size_hidden_layer) + " hidden layers fold " + str(self.leave_out_fold) + ".")
+    plt.savefig('plots/folds/Plot with learning rate ' + str( self.learning_rate ) + " and " + str(self.size_hidden_layer) + " hidden layers fold.")
     
-for leave_out_fold in range(0, num_folds):
-  train = Train(num_epochs, learning_rate, size_hidden_layer, leave_out_fold)
-  train.start()
+learning_rates = [ 0.1 , 0.05,  0.01 ]
+hidden_layers_sizes = [ 20 , 40 , 60 , 80 ]
+
+for learning_rate in learning_rates:
+  for size_hidden_layer in hidden_layers_sizes:
+    # Clean results folder
+    folder = 'results'
+    for the_file in os.listdir(folder):
+        file_path = os.path.join(folder, the_file)
+        try:
+            if os.path.isfile(file_path):
+              os.unlink(file_path)
+        except Exception as e:
+            print(e)
+  
+    plt.clf() # clear plot
+    # Cross-validation
+    for leave_out_fold in range(0, num_folds):
+      train = Train(num_epochs, learning_rate, size_hidden_layer, leave_out_fold)
+      train.start()
+
+    # Plot full result
+    plt.clf() # clear plot
+    PlotFull( num_epochs , learning_rate , size_hidden_layer , num_folds )
 
