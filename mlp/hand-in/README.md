@@ -31,7 +31,7 @@ and the corresponding size of the hidden layer into the results.txt file.
 Out of the results.txt you can read the best setup for the parameters by choosing the one with
 the highest accuracy and lowest standard deviation. In our case this was:
 
-0.01,60,100,0.9006631549999999,0.008368006144851625
+    0.01,60,100,0.9006631549999999,0.008368006144851625
 
 At the end you can check we checked our solution with final.py where we used a learning rate
 of 0.01 with a size of 60 for the layer. The parameters were directly written into the final.py
@@ -43,7 +43,7 @@ If we look at the plot for learning rate 0.1 and 60 hidden layer, we can observe
 the accuracy of both, the test and the validation set increases rapidly with the first training epochs.
 Then the accuracy of the test set is always higher than that of the validation set.
 
-learning rate: 0.01
-hidden layers: 60
-number of epochs: 200
-accuracy: 0.9163673 
+    learning rate: 0.01
+    hidden layers: 60
+    number of epochs: 200
+    accuracy: 0.9163673 
