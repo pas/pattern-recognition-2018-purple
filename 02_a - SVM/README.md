@@ -11,6 +11,12 @@ Program will output Accuracy or Av. Accuracy of cross validation and execution t
 
 ## Results
 
+You can look into files for our results
+
+    svm_linear_kernel_results.txt
+    svm_polynomial_kernel_results.txt
+    svm_other_kernel_results.txt
+
 We mainly focused on linear and polynomial kernels. We found out that the best performing kernel is polynomial.
 
 Best performing kernel is polynomial with the following values
@@ -30,7 +36,8 @@ Best performing linear kernel is with the following values
 ## Conclusions
 
 As C value increases the execution time of the program increases as well for the linear kernel.
+
 Highest accuracy we can get with sigmoid is around 0.9102 and rbf is around 0.9649.
+
 In comparision of execution times, sigmoid and rbf spends similar time. Polynomial kernel
 performs nearly same with linear kernel and they are faster than sigmoid and rbf. 
-Best svm kernel for this data set is Polynomial kernel.
