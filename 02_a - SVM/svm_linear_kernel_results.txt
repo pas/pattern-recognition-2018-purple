@@ -1,0 +1,138 @@
+SVM Results
+
+Linear Kernel
+Cross Validation for k = 10
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Data loaded in  4366  ms. 
+Starting with model generation.
+Average Accuracy: 0.9108 (+/- 0.0134)
+Application finished in :  2585049  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.0001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Data loaded in  4272  ms. 
+Starting with model generation.
+Average Accuracy: 0.9172 (+/- 0.0127)
+Application finished in :  1309508  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.00001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Data loaded in  4568  ms. 
+Starting with model generation.
+Average Accuracy: 0.9281 (+/- 0.0089)
+Application finished in :  2034602  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.000001)**** -> Best performing C value in cross validation
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Data loaded in  4797  ms. 
+Starting with model generation.
+Average Accuracy: 0.9380 (+/- 0.0068)
+Application finished in :  2013062  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.0000001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Data loaded in  5137  ms. 
+Starting with model generation.
+Average Accuracy: 0.9307 (+/- 0.0065)
+Application finished in :  2786095  ms
+---------------------------------
+
+
+Linear Kernel
+Results on test data
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  5753  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  156284  ms
+Accuracy:  0.9124725018332112
+Application finished in :  242509  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.0001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  6180  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  113560  ms
+Accuracy:  0.92273848410106
+Application finished in :  207055  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.00001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  5830  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  103143  ms
+Accuracy:  0.9318045463635758
+Application finished in :  225293  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.000001)**** -> Best performing C value in test data
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  5957  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  108735  ms
+Accuracy:  0.9429371375241651
+Application finished in :  235561  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='linear', C = 0.0000001)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  6086  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  165584  ms
+Accuracy:  0.9345376974868342
+Application finished in :  347213  ms
+---------------------------------
+
+We have similar performance on both cross validation and test set with the C values:
+
+0.001
+0.0001
+0.00001
+0.000001
+0.0000001
+
+Best performing C value is C = 0.000001
