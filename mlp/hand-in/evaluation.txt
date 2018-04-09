@@ -6,6 +6,7 @@ The directory is build in the following way
  |- full # Plots with the means of all folds
  |- folds # Plots with data of each fold. Each full training is put on one plot
 |- results # Temporary cache for results. Used to create the full plots
+|- helpers # Holds python files to help in the process (like creating partitions for the cross-valdidation)
 
 
 For each set of validated hyper parameters we used a 4-fold-cross-validation.
@@ -45,3 +46,8 @@ learning rate: 0.1
 hidden layers: 60
 number of epochs: 40
 This gives us a accuracy of 0.838.
+
+learning rate: 0.01
+hidden layers: 60
+number of epochs: 200
+accuracy: 0.9163673 

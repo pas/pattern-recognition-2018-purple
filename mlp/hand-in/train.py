@@ -9,9 +9,7 @@ import matplotlib.pyplot as plt
 from batch_feed import RandomBatchFeeder
 
 class Train:
-  def __init__(self, num_epochs,  learning_rate, size_hidden_layer, leave_out_fold, num_folds):
-    plt.clf()
-    
+  def __init__(self, num_epochs,  learning_rate, size_hidden_layer, leave_out_fold, num_folds):    
     print 'Number of epochs: ', num_epochs
     print 'Learning rate: ', learning_rate
     print 'Number of hidden layers: ', size_hidden_layer
@@ -23,7 +21,6 @@ class Train:
     self.leave_out_fold = leave_out_fold
     
     # necessary arrays to make the plot of the error-rate on training and validation set wirth respect to the number of training epochs
-    self.training_epochs = [] # stores the number of epoche
     self.accurancy_train_set = []
     self.accurancy_valid_set = []
     
@@ -43,12 +40,10 @@ class Train:
     self.__learn( random_seed , train_x , train_y , test_x , test_y )
 
     # for cross-validation: stores the plot of error-rate on training and validation set with respect to training epochs
-    self.training_epochs = numpy.array( self.training_epochs ) # change List to Array
     self.accurancy_train_set = numpy.array(self.accurancy_train_set)
     self.accurancy_valid_set = numpy.array(self.accurancy_valid_set)
     
     self.__write_to_file()
-    self.__plot()
     
   ##
   #
@@ -126,7 +121,6 @@ class Train:
     for epoch in range( self.num_epochs ):
         total_loss = 0
         num_batches = int(train_x.shape[0] / batch_size)
-        self.training_epochs.append(epoch)
         
         # for every batch, run optimizer, total loss for that batch
         for i in range(num_batches):
@@ -155,6 +149,12 @@ class Train:
     # return last element
     return self.accurancy_valid_set[-1]
     
+  def get_accuracy_train_set( self ):
+    return self.accurancy_train_set
+  
+  def get_accuracy_test_set( self ):
+    return self.accurancy_valid_set
+    
   ##
   #
   # Writes data to a csv file
@@ -171,17 +171,3 @@ class Train:
     writer.writerow( self.accurancy_valid_set )
     result_file.close()
 
-  ##
-  #
-  # Plots results
-  # We always write the same plot so all lines should be on one plot at the end
-  #
-  ##
-  def __plot( self ):
-    plt.plot(self.training_epochs, self.accurancy_train_set, label='accuracy for train set'.format(i=1))
-    plt.plot(self.training_epochs, self.accurancy_valid_set, label='accuracy for validation set (fold='+str(self.leave_out_fold)+')'.format(i=2))
-    plt.legend(loc='best')
-    plt.xlabel('training epoch number')
-    plt.suptitle('Plot with learning rate ' + str( self.learning_rate ) + " and " + str(self.size_hidden_layer) + " hidden layers.")
-    print("Plot with error-rate of training and validation set depending on training epoch is made (for cross-validation).")
-    plt.savefig('plots/folds/Plot with learning rate ' + str( self.learning_rate ) + " and " + str(self.size_hidden_layer) + " hidden layers fold.")
