@@ -11,9 +11,9 @@ from loader import Loader
 
 # Chosen optimized parameters
 
-hidden_layer_size = 70
-learning_rate = 0.009
-num_epochs = 250
+hidden_layer_size = 60
+learning_rate = 0.01
+num_epochs = 200
 
 train_set_str = "data/train-orig.csv"
 test_set_str = "data/test.csv"

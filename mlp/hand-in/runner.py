@@ -42,7 +42,7 @@ for opt, arg in opts:
     num_folds = int(arg)
     
 # Learning rates to test
-learning_rates = [ 0.009 ]
+learning_rates = [ 0.1, 0.05, 0.011, 0.01, 0.009 ]
 
 # Hidden layer sizes to test
 hidden_layers_sizes = [ 20 , 40 , 60 , 80 ]
