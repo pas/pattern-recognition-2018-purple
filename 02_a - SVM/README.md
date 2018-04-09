@@ -35,9 +35,9 @@ Best performing linear kernel is with the following values
 	
 ## Conclusions
 
-As C value increases the execution time of the program increases as well for the linear kernel.
+As C value increases the execution time of the program increases as well.
 
 Highest accuracy we can get with sigmoid is around 0.9102 and rbf is around 0.9649.
 
-In comparision of execution times, sigmoid and rbf spends similar time. Polynomial kernel
+In comparison of execution times, sigmoid and rbf spends similar time. Polynomial kernel
 performs nearly same with linear kernel and they are faster than sigmoid and rbf. 
