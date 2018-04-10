@@ -1,0 +1,43 @@
+SVM Results
+
+Other Kernels
+Results on test data
+
+---------------------------------
+svm.SVC(kernel='rbf', gamma=1.0, C = 1.0)
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  9765  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  2953819  ms
+Accuracy:  0.11192587160855944
+Application finished in :  3700653  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='rbf', gamma=0.0000001, C = 1.0)  *** > Best result for rbf
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  6189  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  457154  ms
+Accuracy:  0.9649356709552697
+Application finished in :  725103  ms
+---------------------------------
+
+---------------------------------
+svm.SVC(kernel='sigmoid', gamma=0.0000001, C = 1.0) *** > Best result for sigmoid
+---------------------------------
+Application started. Loading data...
+Training set loaded with data size:  26999
+Test set loaded with data size:  15001
+Data loaded in  10192  ms. 
+Starting with model generation.
+Model generated. Time taken for calculations:  541864  ms
+Accuracy:  0.9102059862675822
+Application finished in :  788832  ms
+---------------------------------
