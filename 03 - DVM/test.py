@@ -2,6 +2,7 @@ import numpy as numpy
 
 from image import ImageProcessor 
 from preprocess import Preprocessor 
+from paths import Paths
 
 #
 # ImageProcessor
@@ -9,8 +10,14 @@ from preprocess import Preprocessor
 
 imageP = ImageProcessor()
 
+imageP.crop( "test.png" , [ 45 , 155 , 45 , 155 ] )
+
 # imageP.boundingBox( ... )
 # imageP.resize( ... )
+
+#
+# Preprocessor
+#
 
 preprocess = Preprocessor()
 
@@ -20,4 +27,10 @@ print( res )
 res = preprocess.get_black_and_white_ratio( [ 0 , 1 , 0 , 0 ] )
 print ( res )
 
-imageP.crop( "test.png" , [ 45 , 155 , 45 , 155 ] )
+#
+# Paths (XML - SVG)
+#
+
+paths = Paths()
+paths.get( "test.svg" )
+
