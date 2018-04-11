@@ -4,6 +4,8 @@ from image import ImageProcessor
 from preprocess import Preprocessor 
 from paths import Paths
 
+import Image
+
 import unittest
 
 class Tests(unittest.TestCase):
@@ -19,7 +21,7 @@ class Tests(unittest.TestCase):
     
     numpy.testing.assert_array_equal( bounds , numpy.array( [ [ 45.0 , 45.0 ] , [ 155.0 , 45.0] , [155.0 , 155.0] , [45.0 , 155.0] ] ) )
 
-    imageP.crop( "test.png" , imageP.minmax( shape ) , "test_cropped.png" )
+    imageP.crop( "test.png" , imageP.minmax( shape ) , "test_cropped" )
 
     # imageP.resize( ... )
   
@@ -34,6 +36,19 @@ class Tests(unittest.TestCase):
 
     res = preprocess.get_black_and_white_ratio( [ 0 , 1 , 0 , 0 ] )
     self.assertEqual( res , 0.25 )
+    
+    image=Image.open( "binarization-test.png" )
+    image.load()
+    image_data = numpy.asarray(image)
+    
+    res = preprocess.binarization( image_data )
+    
+    expected = numpy.array( 
+      [ [ [ 255 , 255 , 255 ] , [ 255 , 255 , 255 ] , [ 255 , 255 , 255 ] ],
+        [ [ 0 , 0 , 0 ] , [ 0 , 0 , 0 ] , [ 0 , 0 , 0 ] ],
+        [ [ 255 , 255 , 255 ] , [ 255 , 255 , 255 ] , [ 255 , 255 , 255 ] ] ] )
+    
+    numpy.testing.assert_array_equal(  expected , res )
 
   #
   # Paths (XML - SVG)
@@ -41,7 +56,7 @@ class Tests(unittest.TestCase):
   def test_paths( self ):
     paths = Paths()
     results = paths.get( "test.svg" )
-    numpy.testing.assert_array_equal( results[0] , numpy.array( [ [ 45.0 , 45.0 ] , [ 45.0 , 155.0] , [155.0 , 155.0] , [155.0 , 45.0] ] ) )
+    numpy.testing.assert_array_equal( results[0] , numpy.array( [ [ 45.0 , 45.0 ] , [ 155.0 , 45.0] , [155.0 , 155.0] , [45.0 , 155.0] ] ) )
 
 if __name__ == '__main__':
     unittest.main()

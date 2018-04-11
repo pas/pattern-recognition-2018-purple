@@ -1,4 +1,5 @@
 import numpy as numpy
+import cv2 as cv
 
 ##
 #
@@ -12,9 +13,9 @@ class Preprocessor:
   # matrix
   #
   # Expects values from 0 to 255
-  def binarization( image ):
-    # Use library given by paul
-    return image
+  def binarization( self , image ):
+    ret, res = cv.threshold( image , 127 , 255 , cv.THRESH_BINARY )
+    return res
     
   #
   # Normalizes data in a vector
