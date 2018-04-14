@@ -2,6 +2,17 @@
 
 ## Prerequisites
 
+This project uses a git submodule. Therefore, this project should be cloned with:
+
+    git clone --recurse-submodules https://github.com/pas/pattern-recognition-2018-purple.git
+
+If you already cloned the project, proceed as follows:
+1. Move into the folder 'data' inside the '03 - DVM' folder (in Linux) with:
+    cd 03\ -\ DVM/data/
+2. Then use the following two git commands:
+    git submodule init
+    git submodule update
+
 It is best to use a virtual environment. Then install requirements with:
 
     pip install -r requirements.txt

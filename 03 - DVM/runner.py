@@ -8,10 +8,11 @@ from image import ImageProcessor
 from preprocess import Preprocessor 
 from paths import Paths
 
+pathToProvidedData = "data/PatRec17_KWS_Data/"
 paths = Paths()
-results = paths.get( "data/ground-truth/locations/270.svg" )
+results = paths.get(pathToProvidedData + "ground-truth/locations/270.svg" )
 
-imageP = ImageProcessor( "data/images/270.jpg" )
+imageP = ImageProcessor(pathToProvidedData + "images/270.jpg" )
 
 preprocess = Preprocessor()
 

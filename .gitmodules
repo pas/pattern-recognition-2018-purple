@@ -1,0 +1,3 @@
+[submodule "03 - DVM/data/PatRec17_KWS_Data"]
+	path = 03 - DVM/data/PatRec17_KWS_Data
+	url = https://github.com/lunactic/PatRec17_KWS_Data.git
