@@ -9,6 +9,12 @@ import cv2 as cv
 ##
 
 class ImageProcessor:
+  
+  def __init__( self , image_name ):
+    self.image_name = image_name
+    im = Image.open( image_name )
+    im.load()
+    self.image = numpy.asarray(im)
   #
   # Resizes the image to the given
   # height or width
@@ -33,22 +39,24 @@ class ImageProcessor:
     return numpy.array( [ xmin , xmax , ymin , ymax ] )
   
   #
-  # Creates a mask
+  # Creates a mask for the path
+  # with the size of the image
+  #
   # Be aware that the given array
   # has to uphold the strange cv array in array
-  # arrangement:
+  # format:
   #
   # [  
   #   [ [ x1 , y1 ] ], 
   #   [ [ x2 , y2 ] ] 
   # ]
+  #
+  # If you have an array [ [ x1 , y1 ] , [ x2 , y2 ] ]
+  # then you can use #to_weired_format( array ) to
+  # get the needed format.
   # 
-  def create_mask( self , image_path , arr ):
-    image=Image.open( image_path )
-    image.load()
-    image_data = numpy.asarray(image)
-    
-    mask = numpy.zeros(image_data.shape)
+  def create_mask( self , arr ):
+    mask = numpy.zeros(self.image.shape)
 
     # First -1 to take all given shapes
     # Second -1 to fill contours
@@ -60,17 +68,24 @@ class ImageProcessor:
   #
   # Save an image from an array to disk
   #
-  def save( self , image_data , image_name ):
+  def _save( self , image_data , image_name ):
     new_image = Image.fromarray(image_data)
+    new_image.save(image_name+'.png')
+    
+  #
+  # Save image as png to disk
+  #
+  def save( self , image_name ):
+    new_image = Image.fromarray(self.image)
     new_image.save(image_name+'.png')
 
   # 
-  # Gets the quadratic bounding box of a shape
+  # Rectangular bounding box of a shape
   #
-  def bounding_box( self, arr ):
+  def bounding_box( self, shape ):
     result = []
     
-    minmax = self.minmax( arr )
+    minmax = self.minmax( shape )
     
     result.append( [ minmax[0] , minmax[2] ] )
     result.append( [ minmax[1] , minmax[2] ] )
@@ -79,6 +94,14 @@ class ImageProcessor:
     
     return numpy.array( result )
     
+  #
+  # Creates format used by cv
+  #
+  # Example:
+  #
+  # image = Image("test.png")
+  # image.to_weired_format( [ [ 1 , 2 ] , [ 3 , 4 ] ] )
+  # # [ [ [ 1, 2 ] ] ], [ [ 3 , 4 ] ] ]
   def to_weired_format( self , points ):
     new_format = []
     
@@ -89,25 +112,27 @@ class ImageProcessor:
   #
   # Crops image to the given path
   #
+  # Returns new image as numpy array
+  # https://stackoverflow.com/questions/26049174/creating-a-boolean-array-which-compares-numpy-elements-to-none
+  # https://stackoverflow.com/questions/40916035/drawcontours-fails-to-create-a-correct-mask-in-opencv-3-1-0#40917870
   # https://stackoverflow.com/questions/14211340/automatically-cropping-an-image-with-python-pil#14211878
   #
-  def crop( self , image_path , crop_path ,cropped_image_name):
-    image=Image.open( image_path )
-    image.load()
-    image_data = numpy.asarray(image)
+  def crop( self , crop_path ):
+    # Create mask    
+    mask = self.create_mask( self.to_weired_format( crop_path ) )
     
-    print( self.to_weired_format( crop_path ) )
-    mask = self.create_mask( image_path , self.to_weired_format( crop_path ) )
-    res = numpy.zeros(image_data.shape)
+    # Create empty image
+    res = numpy.zeros(self.image.shape)
     res[res == 0] = 255
-    numpy.copyto(res, image_data, where=mask)
     
-    crop_path = self.minmax( crop_path )
-    print( crop_path )
-    # minX, maxX, minY, maxY
-    image_data_new = res[ int(crop_path[0]):int(crop_path[1]), int(crop_path[2]):int(crop_path[3])]
+    # Copy only parts in mask to new empty image
+    numpy.copyto(res, self.image, where=mask)
+    
+    # Get boundaries
+    boundaries = self.minmax( crop_path )
+    
+    # Cut image to boundaries
+    image_data_new = res[ int(boundaries[0]):int(boundaries[1]), int(boundaries[2]):int(boundaries[3])]
 
-    new_image = Image.fromarray( image_data_new.astype( "uint8" ) )
-    new_image.save(cropped_image_name+'.png')
-    return 0
+    return image_data_new
   
