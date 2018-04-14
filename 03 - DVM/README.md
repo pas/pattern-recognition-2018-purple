@@ -1,5 +1,11 @@
 # Project 3
 
+## Prerequisites
+
+It is best to use a virtual environment. Then install requirements with:
+
+    pip install -r requirements.txt
+
 ## Directory
 
 The following files are provided
