@@ -134,5 +134,5 @@ class ImageProcessor:
     # Cut image to boundaries
     image_data_new = res[ int(boundaries[0]):int(boundaries[1]), int(boundaries[2]):int(boundaries[3])]
 
-    return image_data_new
-  
+    return image_data_new.astype( "uint8" )
+
