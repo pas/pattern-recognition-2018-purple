@@ -35,7 +35,7 @@ class Paths:
         # Make bundles with x and y coordinate
         path_arr = []
 
-        for index in range( 0 , len(paths)/2 ) :
+        for index in range( 0 , int( len(paths)/2 ) ) :
           path_arr.append( [ float(paths[index*2]), float(paths[index*2+1]) ] )
         
         all_paths.append( numpy.array( path_arr ) )

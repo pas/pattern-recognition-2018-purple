@@ -14,6 +14,8 @@ class Tests(unittest.TestCase):
   # ImageProcessor
   #
   def test_image_processor( self ):
+    print(Image.__file__)
+    
     test_image = ImageProcessor( "test.png" )
     
     shape = numpy.array( [ [ 45 , 45 ] , [ 75 , 155 ] ,  [ 155 , 45 ] ] )
