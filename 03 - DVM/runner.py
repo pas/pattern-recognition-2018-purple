@@ -1,3 +1,7 @@
+#
+# Images are stored into images
+#
+
 import Image
 
 from image import ImageProcessor 
@@ -13,11 +17,15 @@ preprocess = Preprocessor()
 
 number = 1
 
+images = []
+
 for path in results:  
   new_image = imageP.crop( path )
   new_image = preprocess.binarization( new_image )
-  new_image = Image.fromarray( new_image )
-  new_image.save("images/image-"+str(number) +'.png')
-  
+  images.append( new_image )
+  #new_image = Image.fromarray( new_image )
+  #new_image.save("images/image-"+str(number) +'.png')
   number += 1
+  
+print(images[1][1][1])
 

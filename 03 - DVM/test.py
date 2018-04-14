@@ -14,25 +14,52 @@ class Tests(unittest.TestCase):
   # ImageProcessor
   #
   def test_image_processor( self ):
-    imageP = ImageProcessor()
+    test_image = ImageProcessor( "test.png" )
     
     shape = numpy.array( [ [ 45 , 45 ] , [ 75 , 155 ] ,  [ 155 , 45 ] ] )
-    bounds = imageP.bounding_box( shape )
-    
-    print( imageP.to_weired_format( shape ) )
-    
-    numpy.testing.assert_array_equal( bounds , numpy.array( [ [ 45.0 , 45.0 ] , [ 155.0 , 45.0] , [155.0 , 155.0] , [45.0 , 155.0] ] ) )
 
-    imageP.crop( "test.png" , shape , "test_cropped" )
-    
-    shape3 = numpy.array( [ [112, 170], [112, 230], [129, 231], [132, 230], [232, 230], [240, 238], [299,  148], [192, 147] ] )
-    imageP.crop( "data/images/270.jpg", shape3, "original_shape_cropped" )
-    
+    # Testing to_weired_format
     # cv somehow expects a really weired structure. The points
     # are arrays of arrays but each array of array always only
     # holds one point.
-    shape2 = numpy.array( [ [ [ 45 , 45 ] ] , [ [ 75 , 155 ] ] ,  [ [ 155 , 45 ] ] ] )
-    imageP.create_mask( "test.png" , shape2 )
+    self.assertTrue( test_image.to_weired_format( shape ).shape == (3 , 1 , 2 ) )
+    
+    # Testing bounding_box
+    bounds = test_image.bounding_box( shape )
+    numpy.testing.assert_array_equal( bounds , numpy.array( [ [ 45.0 , 45.0 ] , [ 155.0 , 45.0] , [155.0 , 155.0] , [45.0 , 155.0] ] ) )
+
+    # Testing crop (only visible test!)
+    res = test_image.crop( shape )
+    new_image = Image.fromarray( res )
+    new_image.save("test_cropped.png")
+    
+    # Testing crop with original picture (only visible test!)
+    original_image = ImageProcessor( "test.png" )
+    
+    shape3 = numpy.array( [ [112, 170], [112, 230], [129, 231], [132, 230], [232, 230], [240, 238], [299,  148], [192, 147] ] )
+    res = original_image.crop( shape3 )
+    new_image = Image.fromarray( res )
+    new_image.save("original_shape_cropped.png")
+    
+    # Testing mask
+    mini_test_image = ImageProcessor( "binarization-test.png" )
+    quadratic_shape = numpy.array( [ [ [ 0 , 0 ] ] , [ [ 0 , 1 ] ] ,  [ [ 1 , 1 ] ] , [ [ 1 , 0 ] ] ] )
+    mask = mini_test_image.create_mask( quadratic_shape )
+    
+    expected = numpy.array([ 
+        [ [ True,  True ,  True  ],
+          [ True,  True ,  True  ],
+          [ False, False , False ] ],
+
+        [ [ True,  True,  True  ],
+          [ True,  True,  True  ],
+          [ False, False, False ] ],
+
+        [ [ False, False, False ],
+          [ False, False, False ],
+          [ False, False, False ] ] ])
+    
+    numpy.testing.assert_array_equal( expected , mask )
 
     # imageP.resize( ... )
     
@@ -68,7 +95,7 @@ class Tests(unittest.TestCase):
   def test_paths( self ):
     paths = Paths()
     results = paths.get( "test.svg" )
-    numpy.testing.assert_array_equal( results[0] , numpy.array( [ [ 45.0 , 45.0 ] , [ 155.0 , 45.0] , [155.0 , 155.0] , [45.0 , 155.0] ] ) )
+    numpy.testing.assert_array_equal( results[0] , numpy.array( [ [ 45.0 , 45.0 ] , [ 45.0 , 155.0] , [155.0 , 155.0] , [155.0 , 45.0] ] ) )
 
 if __name__ == '__main__':
     unittest.main()
