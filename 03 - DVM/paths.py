@@ -36,7 +36,7 @@ class Paths:
         path_arr = []
 
         for index in range( 0 , len(paths)/2 ) :
-          path_arr.append( [ float(paths[index*2+1]), float(paths[index*2]) ] )
+          path_arr.append( [ float(paths[index*2]), float(paths[index*2+1]) ] )
         
         all_paths.append( numpy.array( path_arr ) )
         

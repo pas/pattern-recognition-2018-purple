@@ -1,0 +1,6 @@
+libpng : http://libpng.org/pub/png/libpng.html
+cairo : https://cairographics.org/manual/cairo-PNG-Support.html
+opencv : https://opencv.org/
+https://stackoverflow.com/questions/28759253/how-to-crop-the-internal-area-of-a-contour#28759496
+python-image-library : https://infohost.nmt.edu/tcc/help/pubs/pil/pil.pdf
+=> working with masks

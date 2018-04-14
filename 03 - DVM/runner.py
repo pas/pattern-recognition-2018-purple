@@ -10,6 +10,9 @@ imageP = ImageProcessor()
 number = 1
 for path in results:
   bounds = imageP.minmax( path )
-  imageP.crop( "data/images/270.jpg" , bounds , "images/image-"+str(number) )
+  print( bounds )
+  print( path )
+  print( path.astype( "uint8" ) )
+  imageP.crop( "data/images/270.jpg" , path , "images/image-"+str(number) )
   number += 1
 
