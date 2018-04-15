@@ -1,4 +1,5 @@
 import numpy as numpy
+from features import Features
 
 ##
 #
@@ -39,6 +40,20 @@ class DTW:
   
   def feature_distance( self , value1 , value2 ):
     return numpy.linalg.norm( value1 - value2 )
+    
+  def calculate_feature_vectors( self , image ):
+    feature_calc = Features()
+    feature_vectors = []
+    
+    # always white
+    previous_line = numpy.full( len(image[0]) , numpy.max(image) , dtype=image.dtype )
+    
+    for line in image:
+      feature_vectors.append( feature_calc.generateFV( previous_line , line ) )
+      previous_line = line
+      
+    return ( numpy.asarray( feature_vectors ) )
+    
 
   
 

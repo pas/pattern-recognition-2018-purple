@@ -4,6 +4,7 @@ from image import ImageProcessor
 from preprocess import Preprocessor 
 from paths import Paths
 from dtw import DTW
+from features import Features
 
 import Image
 
@@ -67,6 +68,16 @@ class Tests(unittest.TestCase):
     # imageP.resize( ... )
     
   #
+  # Features
+  #
+  
+  def test_features( self ):
+    features = Features()
+    
+    res = features.lowerContour( numpy.array( [ 255 , 0 , 255 , 0 , 0 ] ) )
+    print( res )
+    
+  #
   # DTW
   #
   
@@ -75,41 +86,27 @@ class Tests(unittest.TestCase):
     dist = dtw.distance( numpy.array([ 1 , 2 , 3 ]) , numpy.array( [1 , 1 , 2 , 2 , 3 , 3 ] ) , 100 )
     dist = dtw.distance( numpy.array([ 1 , 1 , 3 ]) , numpy.array( [1 , 1 , 2 , 2 , 3 , 3 ] ) , 100 )
     dist = dtw.distance( numpy.array([ 1 , 2 , 1 , 2 , 2 , 2 ]) , numpy.array( [ 2 , 1 , 2 , 1 , 1 , 1 ] ) , 2 )
-    #print( dist )
+    print( dist )
     
     preprocess = Preprocessor()
     im = Image.open( "images/image-22.png" ) #to
     im.load()
     image1 = numpy.asarray(im)
-    features1 = []
-    
-    for line in image1:
-      features1.append( preprocess.get_black_and_white_ratio( line.tolist() , 255 ) )
+    features1 = dtw.calculate_feature_vectors( image1 )
     
     im = Image.open( "images/image-32.png" ) #to
     im.load()
     image2 = numpy.asarray(im)
-    
-    features2 = []
-    for line in image2:
-      features2.append( preprocess.get_black_and_white_ratio( line.tolist() , 255 ) )
-    
+    features2 = dtw.calculate_feature_vectors( image2 )
     
     dist, _ = dtw.distance( numpy.array(features1) , numpy.array(features2) , len(features1) + len(features2) )
     print( dist )
-
-    features3 = []
-    for line in image2:
-      features2.append( preprocess.get_black_and_white_ratio( line.tolist() , 255 ) )
       
     im = Image.open( "images/image-27.png" ) #of
     im.load()
     image3 = numpy.asarray(im)
+    features3 = dtw.calculate_feature_vectors( image3 )
 
-    features3 = []
-    for line in image3:
-      features3.append( preprocess.get_black_and_white_ratio( line.tolist() , 255 ) )
-    
     dist, _ = dtw.distance( numpy.array(features1) , numpy.array(features3) , len(features1) + len(features3) )
     print( dist )
     
