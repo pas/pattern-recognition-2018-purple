@@ -3,6 +3,7 @@ import numpy as numpy
 from image import ImageProcessor 
 from preprocess import Preprocessor 
 from paths import Paths
+from dtw import DTW
 
 import Image
 
@@ -65,7 +66,16 @@ class Tests(unittest.TestCase):
 
     # imageP.resize( ... )
     
+  #
+  # DTW
+  #
   
+  def test_dtw( self ):
+    dtw = DTW()
+    dist = dtw.distance( numpy.array([ 1 , 2 , 3 ]) , numpy.array( [1 , 1 , 2 , 2 , 3 , 3 ] ) )
+    dist = dtw.distance( numpy.array([ 1 , 1 , 3 ]) , numpy.array( [1 , 1 , 2 , 2 , 3 , 3 ] ) )
+    print( dist )
+    
   #
   # Preprocessor
   #
