@@ -11,7 +11,7 @@ import numpy as numpy
 ##
 
 class DTW:
-  def distance(self, s, t ): #w
+  def distance(self, s, t , w ):
     n = len(s)
     m = len(t)
     
@@ -19,7 +19,7 @@ class DTW:
     res.shape = ( n , m )
     res[ res == 0 ] = float('inf')
 
-    #w := max(w, abs(n-m)) // adapt window size (*)
+    w = max( w , abs(n-m) ) # adapt window size (*)
 
     for i in range(0, n):
       for j in  range(0, m):
@@ -28,7 +28,7 @@ class DTW:
     res[0][0] = 0
 
     for i in range( 0 , n ):
-      for j in  range( 0 , m ): # max(1, i-w) to min(m, i+w)
+      for j in  range( max( 1 ,  i-w ) , min( m , i+w ) ):
         if( (i,j) != (0,0) ): 
           cost = self.feature_distance( s[i] , t[j] )
           res[i][j] = cost + min( res[ i-1 ][ j   ],  #insertion

@@ -46,19 +46,19 @@ class Preprocessor:
   # pixel in a "binarized" image
   # vector
   #
-  # Expects a row vector. Interprets
-  # 1 as white and 0 as black.
+  # Expects a row vector. The interpretation
+  # of the white pixel is given as second
+  # argument
   #
   # Example:
-  # get_black_and_white_ratio( [ 0 , 1 , 0 , 0 ] )
+  # get_black_and_white_ratio( [ 0 , 1 , 0 , 0 ] , 1 )
   # returns 0.25 ( 1/4 )
   #
-  def get_black_and_white_ratio( self , vector ):
-    print( len(vector) )
+  def get_black_and_white_ratio( self , vector , white_pixel ):
     # get size of vector
     # get number of 1 in vector
     # calculate 1s / size
-    return vector.count( 1 ) / float( len( vector ) )
+    return vector.count( white_pixel ) / float( len( vector ) )
   
   
     
