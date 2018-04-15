@@ -16,11 +16,11 @@ class Features:
 
   # The lower Contour is the black pixel on the lowest row
   def lowerContour(self, x):
-    return np.where(x == x.min())[-1]
+    return np.where(x == x.min())[0][-1]
 
   # The upper Contour is the black pixel on the highest row
   def upperContour(self, x):
-    return np.where(x == x.min())[0]
+    return np.where(x == x.min())[0][0]
 
   def bwTransitions(self, x):
     transitions = 0
@@ -29,17 +29,19 @@ class Features:
       if (tmp != val):
         transitions += 1
       tmp = val
-    return
+    return transitions
 
   def blackPxFractionWindow(self, x):
     # Amount of black pixels in the array
-    blackPxs = len(np.where(x == x.min()))
+    blackPxs = len(np.where(x == x.min())[0])
     return blackPxs/len(x)
 
   def blackPxFractionLcUc(self, x):
-    xLc = self.lowerContour(x)
+    # The lowest Contour should also include itself for the number of black pixels
+    # Therefore 1 has to be added.
+    xLc = self.lowerContour(x) + 1
     xUc = self.upperContour(x)
-    blackPxs = len(np.where(x[xUc:xLc,] == x[xUc:xLc,].max()))
+    blackPxs = len(np.where(x[xUc:xLc,] == x.min())[0])
     return blackPxs/len(x)
 
   def gradient(self, x1, x2):
@@ -48,3 +50,10 @@ class Features:
     x2Lc = self.lowerContour(x2)
     x2Uc = self.upperContour(x2)        
     return x1Lc/x2Lc , x1Uc/x2Uc
+
+
+""" x = [0, 0, 0, 255, 255, 0, 0, 255, 255, 255, 255, 0]
+y = [0, 0, 255, 255, 0, 0, 0, 255, 255, 255, 0, 0]
+f = Features()
+test = f.generateFV(np.asarray(x), np.asarray(y))
+print(test) """
