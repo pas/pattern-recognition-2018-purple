@@ -1,12 +1,10 @@
 #
 # Images are stored into images
 #
-
-import Image
-
 from image import ImageProcessor 
 from preprocess import Preprocessor 
 from paths import Paths
+from features import Features
 
 pathToProvidedData = "data/PatRec17_KWS_Data/"
 paths = Paths()
