@@ -75,7 +75,46 @@ class Tests(unittest.TestCase):
     features = Features()
     
     res = features.lowerContour( numpy.array( [ 255 , 0 , 255 , 0 , 0 ] ) )
-    print( res )
+    self.assertEqual( res , 4 )
+    res = features.lowerContour( numpy.array( [ 255 , 255 , 255 , 255 , 255 ] ) )
+    self.assertEqual( res , 4 )
+    res = features.upperContour( numpy.array( [ 255 , 0 , 255 , 0 , 0 ] ) )
+    self.assertEqual( res , 1 )
+    res = features.upperContour( numpy.array( [ 255 , 255 , 255 , 255 , 255 ] ) )
+    self.assertEqual( res , 0 )
+    
+    
+    res = features.blackPxFractionWindow( numpy.array( [ 0 , 0 , 0 , 0 , 0 ] ) )
+    self.assertEqual( res , 1 )
+    
+    res = features.blackPxFractionWindow( numpy.array( [ 0 , 255 , 0 , 255 , 255 ] ) )
+    self.assertEqual( res , 0.4 )
+    
+    res = features.bwTransitions( numpy.array( [ 0 , 255 , 0 , 255 , 0 ] ) )
+    self.assertEqual( res , 5 )
+    
+    res = features.bwTransitions( numpy.array( [ 255 , 255 , 0 , 255 , 255 ] ) )
+    self.assertEqual( res , 2 )
+    
+    res = features.bwTransitions( numpy.array( [ 0 , 0 , 0 , 0 , 0 ] ) )
+    self.assertEqual( res , 1 )
+    
+    res = features.bwTransitions( numpy.array( [ 255 , 255 , 255 , 255 , 255 ] ) )
+    self.assertEqual( res , 0 )
+    
+    #res = features.blackPxFractionWindow( numpy.array( [ 255 , 255 , 255 , 255 , 255 ] ) )
+    #self.assertEqual( res , 0 )
+    
+    res = features.blackPxFractionLcUc( numpy.array( [ 255 , 0 , 255 , 0 , 0 ] ) )
+    self.assertEqual( res , 0.75 )
+    
+    res1 , res2 = features.gradient( numpy.array( [ 0 , 0 , 0 , 0 , 0 ] ) , numpy.array( [ 0 , 0 , 0 , 0 , 0 ] ) )
+    self.assertEqual( res1 , 0 )
+    self.assertEqual( res2 , 0 )
+    
+    res1 , res2 = features.gradient( numpy.array( [ 255 , 0 , 0 , 0 , 0 ] ) , numpy.array( [ 0 , 255 , 0 , 0 , 0 ] ) )
+    self.assertEqual( res1 , 0 )
+    self.assertEqual( res2 , 1 )
     
   #
   # DTW
@@ -86,7 +125,7 @@ class Tests(unittest.TestCase):
     dist = dtw.distance( numpy.array([ 1 , 2 , 3 ]) , numpy.array( [1 , 1 , 2 , 2 , 3 , 3 ] ) , 100 )
     dist = dtw.distance( numpy.array([ 1 , 1 , 3 ]) , numpy.array( [1 , 1 , 2 , 2 , 3 , 3 ] ) , 100 )
     dist = dtw.distance( numpy.array([ 1 , 2 , 1 , 2 , 2 , 2 ]) , numpy.array( [ 2 , 1 , 2 , 1 , 1 , 1 ] ) , 2 )
-    print( dist )
+    #print( dist )
     
     preprocess = Preprocessor()
     im = Image.open( "images/image-22.png" ) #to
@@ -102,13 +141,22 @@ class Tests(unittest.TestCase):
     dist, _ = dtw.distance( numpy.array(features1) , numpy.array(features2) , len(features1) + len(features2) )
     print( dist )
       
+    # train
     im = Image.open( "images/image-27.png" ) #of
     im.load()
     image3 = numpy.asarray(im)
     features3 = dtw.calculate_feature_vectors( image3 )
-
-    dist, _ = dtw.distance( numpy.array(features1) , numpy.array(features3) , len(features1) + len(features3) )
-    print( dist )
+    
+    # find
+    for image_number in range( 1 , 221 ):  
+      im = Image.open( "images/image-"+str(image_number)+".png" )
+      im.load()
+      current_image = numpy.asarray(im)
+      features_current = dtw.calculate_feature_vectors( current_image )
+      dist, _ = dtw.distance( numpy.array( features3 ) , numpy.array( features_current ) , len( features3 ) + len( features_current ) )
+      if( dist < 2000 ):
+        print( dist )
+        print( "image-"+str(image_number) )
     
     
   #
