@@ -30,6 +30,19 @@ class ImageProcessor:
       max_y = numpy.amax(indices_inner_image[1])
       
       return image[min_x:max_x+1,min_y:max_y+1]
+  
+  #
+  # Resizes the png-image to a given heigth, aspect-ratio
+  # is computed from the heigth
+  #
+  def resize_image( image, heigth ):
+      image_width, image_heigth = image.size
+      aspect_ratio = image_width / image_heigth
+      width = int(heigth*aspect_ratio)
+      image.show()
+      resized_image = image.resize( (width, heigth), Image.NEAREST )
+      resized_image.show()
+      return resized_image
       
   #
   # Resizes the png-image to the given
