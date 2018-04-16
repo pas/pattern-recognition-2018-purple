@@ -39,9 +39,7 @@ class ImageProcessor:
       image_width, image_heigth = image.size
       aspect_ratio = image_width / image_heigth
       width = int(heigth*aspect_ratio)
-      image.show()
       resized_image = image.resize( (width, heigth), Image.NEAREST )
-      resized_image.show()
       return resized_image
       
   #
