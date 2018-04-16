@@ -1,6 +1,7 @@
 import numpy as numpy
 import Image
 import cv2 as cv
+from PIL import ImageChops
 
 ##
 #
@@ -19,10 +20,33 @@ class ImageProcessor:
   # Resizes the image to the given
   # height or width
   #
-  def resize( image , height , width ):
-    # ...
+  def crop_and_resize( image , height ):
+    bg = Image.new(image.mode, image.size, image.getpixel((0,0)))
+    diff = ImageChops.difference(image, bg)
+    diff = ImageChops.add(diff, diff, 2.0, -100)
+    bbox = diff.getbbox()
     
-    return 0
+    cropped_image = image.crop(bbox)
+    
+    print(image.size)
+    image_length, image_heigth = image.size
+    aspect_ratio = image_heigth / image_length
+    print(aspect_ratio)
+    
+    # Image.NEAREST gives the best result to work with.
+    resized_image = cropped_image.resize((height, int(height*aspect_ratio)), Image.NEAREST)      # use nearest neighbour
+    
+    # im3 = cropped_image.resize((500, 400), Image.BILINEAR)     # linear interpolation in a 2x2 environment
+    # im3.show()
+    # im4 = cropped_image.resize((500, 400), Image.BICUBIC)      # cubic spline interpolation in a 4x4 environment
+    # im4.show()
+    # im5 = cropped_image.resize((500, 400), Image.ANTIALIAS)    # best down-sizing filter
+    # im5.show()
+    
+    if bbox:
+        return resized_image
+    
+    return image
     
   def minmax( self , arr ):
     result = []
