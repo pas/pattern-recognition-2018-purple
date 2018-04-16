@@ -16,8 +16,23 @@ class ImageProcessor:
     im = Image.open( image_name )
     im.load()
     self.image = numpy.asarray(im)
+    
   #
-  # Resizes the image to the given
+  # Trims the numpy-array-image to the given
+  #
+  def trim_white_space_on_array( image ):      
+      indices_inner_image = numpy.where(image == 0)
+      
+      min_x = numpy.amin(indices_inner_image[0])
+      max_x = numpy.amax(indices_inner_image[0])
+      
+      min_y = numpy.amin(indices_inner_image[1])
+      max_y = numpy.amax(indices_inner_image[1])
+      
+      return image[min_x:max_x+1,min_y:max_y+1]
+      
+  #
+  # Resizes the png-image to the given
   # height or width
   #
   def crop_and_resize( image , height ):
