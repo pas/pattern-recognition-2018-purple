@@ -1,30 +1,77 @@
 #
 # Images are stored into images
 #
-from image import ImageProcessor 
-from preprocess import Preprocessor 
+
+import Image
+import os
+
+from image import ImageProcessor
+
+from preprocess import Preprocessor
 from paths import Paths
-from features import Features
 
 pathToProvidedData = "data/PatRec17_KWS_Data/"
 paths = Paths()
-results = paths.get(pathToProvidedData + "ground-truth/locations/270.svg" )
-
-imageP = ImageProcessor(pathToProvidedData + "images/270.jpg" )
 
 preprocess = Preprocessor()
 
-number = 1
-
 images = []
 
-for path in results:  
-  new_image = imageP.crop( path )
-  new_image = preprocess.binarization( new_image )
-  images.append( new_image )
-  #new_image = Image.fromarray( new_image )
-  #new_image.save("images/image-"+str(number) +'.png')
-  number += 1
-  
-print(images[1][1][1])
+# iterate through all the page images (jpg files) and through the related svg files
+for page in os.listdir(pathToProvidedData + "images"):
+    page_number = page[:-4] #extracts number from filename; so 240.jpg gets 240
+    print(page)
+    imageP = ImageProcessor(pathToProvidedData + "images/" + str(page_number) + ".jpg")
+    polygons = paths.get(pathToProvidedData + "ground-truth/locations/" + str(page_number) + ".svg")
 
+    # word of each page image (jpg file) are put in a seperate folder
+    os.makedirs("images/" + str(page_number))
+    number = 1
+    for path in polygons:
+        #print (path)
+        new_image = imageP.crop(path)
+        new_image = preprocess.binarization( new_image )
+        # The following method does not work properly for all jpg files; so commented this out for the moment.
+        #new_image = ImageProcessor.trim_white_space_on_array( new_image )
+        images.append( new_image )
+        new_image = Image.fromarray( new_image )
+        new_image = ImageProcessor.resize_image( new_image, 200 )
+        new_image.save("images/"+ str(page_number) + "/image-"+str(number) +'.png')
+        number += 1
+
+
+
+### old code
+
+#
+# import Image
+#
+# from image import ImageProcessor
+#
+# from preprocess import Preprocessor
+# from paths import Paths
+#
+# pathToProvidedData = "data/PatRec17_KWS_Data/"
+# paths = Paths()
+# results = paths.get(pathToProvidedData + "ground-truth/locations/270.svg" )
+#
+# imageP = ImageProcessor(pathToProvidedData + "images/270.jpg" )
+#
+# preprocess = Preprocessor()
+#
+# number = 1
+#
+# images = []
+#
+# for path in results:
+#   new_image = imageP.crop( path )
+#   new_image = preprocess.binarization( new_image )
+#   new_image = ImageProcessor.trim_white_space_on_array( new_image )
+#   images.append( new_image )
+#   new_image = Image.fromarray( new_image )
+#   new_image = ImageProcessor.resize_image( new_image, 200 )
+#   new_image.save("images/image-"+str(number) +'.png')
+#   number += 1
+#
+# print(images[1][1][1])
+#
