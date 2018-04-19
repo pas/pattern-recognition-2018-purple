@@ -75,5 +75,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Don't include the images file. Everyone can create it with runner.py
+images/
 
 # End of https://www.gitignore.io/api/osx,macos,linux,windows

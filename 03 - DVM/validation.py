@@ -10,6 +10,9 @@ def get_start_of_valid():
     line = 0
     images = open("data/PatRec17_KWS_Data/ground-truth/transcription.txt", "r")
     for img in images:
+        # Looking for first occurence of 300 because
+        # the image 300 is the start of our validation
+        # set
         if img.split("-")[0] == 300:
             return line
         else:
@@ -17,11 +20,10 @@ def get_start_of_valid():
     return line
 
 # Returns true if line in transcription file represents valid image.
+# All images in the valdation set are in the files that are
+# greater than 300
 def check_if_valid_line(valid_img):
-    if (int(valid_img.split("-")[0]) > 300):
-        return True
-    else:
-        return False
+    return int(valid_img.split("-")[0]) > 300
 
 
 
