@@ -18,7 +18,7 @@ class DTW:
     
     res = numpy.empty( ( n, m ) , dtype=numpy.dtype('float') )
     res.shape = ( n , m )
-    res[ res == 0 ] = float('inf')
+    res.fill( float('inf') )
 
     w = max( w , abs(n-m) ) # adapt window size (*)
 

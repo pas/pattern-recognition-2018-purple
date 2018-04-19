@@ -5,6 +5,7 @@ from preprocess import Preprocessor
 from paths import Paths
 from dtw import DTW
 from features import Features
+from metrics import Metrics
 
 import Image
 
@@ -13,11 +14,27 @@ import unittest
 class Tests(unittest.TestCase):
   
   #
+  # Metrics
+  # 
+  def test_metrics( self ):
+    # Full sample: 15
+    # Selected 11 ( 5 true positive , 6 false positive )
+    # Not-selected 4 ( 3 true negative , 1 false negative )
+    # 8 correctly selected ( 5 true positive, 3 true negative)
+    
+    metrics = Metrics( 5 , 3 , 6 , 1 )
+    
+    # tp / (tp + fn) => 5 / ( 5 + 1 )
+    self.assertEqual( metrics.recall() , 5/6 )
+    
+    # tp / (tp + fp) => 5 / ( 5 + 6 )
+    self.assertEqual( metrics.precision() , 5/11 )
+    
+  
+  #
   # ImageProcessor
   #
   def test_image_processor( self ):
-    print(Image.__file__)
-    
     test_image = ImageProcessor( "test.png" )
     
     shape = numpy.array( [ [ 45 , 45 ] , [ 75 , 155 ] ,  [ 155 , 45 ] ] )
