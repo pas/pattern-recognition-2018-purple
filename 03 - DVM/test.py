@@ -18,10 +18,11 @@ class Tests(unittest.TestCase):
   # 
   def test_metrics( self ):
     # Full sample: 15
-    # Selected 11 ( 5 true positive , 6 false positive )
-    # Not-selected 4 ( 3 true negative , 1 false negative )
-    # 8 correctly selected ( 5 true positive, 3 true negative)
+    # Selected 11 ( 5 true positives , 6 false positives )
+    # Not-selected 4 ( 3 true negatives , 1 false negatives )
+    # 8 correctly selected ( 5 true positives, 3 true negatives)
     
+    # tp , tn , fp , fn
     metrics = Metrics( 5 , 3 , 6 , 1 )
     
     # tp / (tp + fn) => 5 / ( 5 + 1 )
@@ -29,6 +30,15 @@ class Tests(unittest.TestCase):
     
     # tp / (tp + fp) => 5 / ( 5 + 6 )
     self.assertEqual( metrics.precision() , 5/11 )
+    
+    metrics = Metrics( 1 , 2 , 0 , 2 )
+    self.assertEqual( metrics.precision() , 1 )
+    
+    res = [ True , True , False , True , False ]
+    recall, precision = Metrics.plot_recall_precision( res )
+    
+    numpy.testing.assert_array_equal( recall , [ 1/3 , 2/3 , 2/3 , 1 , 1 ] )
+    numpy.testing.assert_array_equal( precision , [ 1 , 1 , 2/3 , 3/4 , 3/5 ] )
     
   
   #
@@ -139,42 +149,38 @@ class Tests(unittest.TestCase):
   
   def test_dtw( self ):
     dtw = DTW()
-    dist = dtw.distance( numpy.array([ 1 , 2 , 3 ]) , numpy.array( [1 , 1 , 2 , 2 , 3 , 3 ] ) , 100 )
+    dist, _ = dtw.distance( numpy.array([ 1 , 2 , 3 ]) , numpy.array( [1 , 1 , 2 , 2 , 3 , 3 ] ) , 100 )
+    self.assertEqual( dist , 0.0 )
+    
     dist = dtw.distance( numpy.array([ 1 , 1 , 3 ]) , numpy.array( [1 , 1 , 2 , 2 , 3 , 3 ] ) , 100 )
     dist = dtw.distance( numpy.array([ 1 , 2 , 1 , 2 , 2 , 2 ]) , numpy.array( [ 2 , 1 , 2 , 1 , 1 , 1 ] ) , 2 )
     #print( dist )
     
     preprocess = Preprocessor()
-    im = Image.open( "images/image-22.png" ) #to
-    im.load()
-    image1 = numpy.asarray(im)
-    features1 = dtw.calculate_feature_vectors( image1 )
+    image1 = ImageProcessor( "images/270/image-22.png" ) #to
+    features1 = image1.calculate_feature_vectors( )
     
-    im = Image.open( "images/image-32.png" ) #to
-    im.load()
-    image2 = numpy.asarray(im)
-    features2 = dtw.calculate_feature_vectors( image2 )
+    image2 = ImageProcessor( "images/270/image-32.png" ) #to
+    features2 = image2.calculate_feature_vectors()
     
     dist, _ = dtw.distance( numpy.array(features1) , numpy.array(features2) , len(features1) + len(features2) )
     print( dist )
       
     # train
-    im = Image.open( "images/image-27.png" ) #of
-    im.load()
-    image3 = numpy.asarray(im)
-    features3 = dtw.calculate_feature_vectors( image3 )
+    image3 = ImageProcessor( "images/270/image-27.png" ) #of
+    features3 = image3.calculate_feature_vectors()
     
     # find
+    '''
     for image_number in range( 1 , 221 ):  
-      im = Image.open( "images/image-"+str(image_number)+".png" )
-      im.load()
-      current_image = numpy.asarray(im)
-      features_current = dtw.calculate_feature_vectors( current_image )
+      image = ImageProcessor( "images/270/image-"+str(image_number)+".png" )
+      
+      features_current = image.calculate_feature_vectors()
       dist, _ = dtw.distance( numpy.array( features3 ) , numpy.array( features_current ) , len( features3 ) + len( features_current ) )
       if( dist < 2000 ):
         print( dist )
-        print( "image-"+str(image_number) )
-    
+        print( "270/image-"+str(image_number) )
+    '''
     
   #
   # Preprocessor

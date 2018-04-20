@@ -1,3 +1,7 @@
+from image import ImageProcessor
+from dtw import DTW
+from metrics import Metrics
+
 #
 # Validation.
 # For each keyword fetch the related train images.
@@ -25,8 +29,9 @@ def get_start_of_valid():
 def check_if_valid_line(valid_img):
     return int(valid_img.split("-")[0]) > 300
 
-
-
+def get_key( item ):
+  return item[0]
+  
 # TODO: Main part here. Probably we have to give this part a class name so that it can be called from other classes.
 # TODO: Also refactor: make more methods.
 keywords = open("data/PatRec17_KWS_Data/task/keywords.txt", "r")
@@ -34,6 +39,7 @@ keywords = open("data/PatRec17_KWS_Data/task/keywords.txt", "r")
 # Do validation for each keyword.
 for keyword in keywords:
     keyword = keyword.split("\n")[0] # We do not want to have the linebreak included in the string.
+    print( "Keyword: " + keyword )
     train_images = [] # Stores test images of the keyword (jpg file and number of word in jpg file).
 
     # Part A: Store location of train images which contain the keyword.
@@ -50,16 +56,23 @@ for keyword in keywords:
                 break
             jpg = int(actual_jpg)
             counter = 1
-        if content == keyword:
-            train_images.append([ jpg, counter])
+        if content.startswith( keyword ):
+            path_to_img = "images/"+ str(jpg) +"/image-" + str(counter) + ".png"
+            train_images.append( ImageProcessor( path_to_img ) )
+            print( "Found training images: " + "images/"+ str(jpg) +"/image-" + str(counter) + ".png" )
 
     # Part B: For each word image of the validation set calculate DTW value and store it together with the actual content of the imageself.
-    valid_images = open("data/PatRec17_KWS_Data/ground-truth/transcription.txt", "r")
-    counter = 0
-    jpg = 300
+    dtw = DTW()
+    
     for train_img in train_images:
+        valid_images = open("data/PatRec17_KWS_Data/ground-truth/transcription.txt", "r")
+        counter = 0
+        jpg = 300
+      
         # TODO: open train_img
         DTW_values = [] # Stores DTW values of train_img and each image of valid set. Also stores the word of the valid image.
+        train_features = train_img.calculate_feature_vectors()
+        
         for valid_img in valid_images:
             if check_if_valid_line(valid_img): # Only lines which store information about image of valid set are relevant.
                 counter = counter + 1
@@ -68,7 +81,20 @@ for keyword in keywords:
                     jpg = int(actual_jpg)
                     counter = 1
                 content_of_img = valid_img.split()[1]
-                path_to_img = "images/"+ str(jpg) +"/image-" + str(counter)
-                # TODO: open valid image and calculate DTW for this valid img and the train img.
-                # TODO: Store DTW together with content_of_img in an DTW_values array.
+                path_to_img = "images/"+ str(jpg) +"/image-" + str(counter) + ".png"
+                
+                # open valid image and calculate DTW for this valid img and the train img.
+                image = ImageProcessor( path_to_img )
+                validation_features = image.calculate_feature_vectors()
+                
+                # Store DTW (? together with content_of_img ?) in an DTW_values array.
+                # TODO: find out if image fits keyword
+                dist, _ = dtw.distance( train_features , validation_features , 4 )
+                validation_string = valid_img.split(" ")[1][:-1]
+                if( validation_string.startswith( keyword ) ):
+                  print( "Found same text with distance " + str(dist) + ": " + path_to_img )
+                DTW_values.append( [ dist , keyword , validation_string , validation_string.startswith( keyword ) ] )
+                
+            DTW_values = sorted( DTW_values , key=get_key )
+            Metrics.plot_recall_precision( DTW_values )
         #TODO:Sort that DTW_array and calculate plots for precision and recall.

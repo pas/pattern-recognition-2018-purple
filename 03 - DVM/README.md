@@ -2,6 +2,12 @@
 
 ## Prerequisites
 
+This project runs on python3
+
+Install python-tk
+
+    apt-get install python3-tk
+
 This project uses a git submodule. Therefore, this project should be cloned with:
 
     git clone --recurse-submodules https://github.com/pas/pattern-recognition-2018-purple.git

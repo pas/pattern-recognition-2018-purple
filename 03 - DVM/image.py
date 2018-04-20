@@ -3,6 +3,8 @@ import Image
 import cv2 as cv
 from PIL import ImageChops
 
+from features import Features
+
 ##
 #
 # Processing images (especially cutting)
@@ -185,4 +187,17 @@ class ImageProcessor:
     image_data_new = res[ int(boundaries[0]):int(boundaries[1]), int(boundaries[2]):int(boundaries[3])]
 
     return image_data_new.astype( "uint8" )
+    
+  def calculate_feature_vectors( self ):
+    feature_calc = Features()
+    feature_vectors = []
+    
+    # always white
+    previous_line = numpy.full( len( self.image[0] ) , numpy.max( self.image ) , dtype=self.image.dtype )
+    
+    for line in self.image:
+      feature_vectors.append( feature_calc.generateFV( previous_line , line ) )
+      previous_line = line
+      
+    return ( numpy.asarray( feature_vectors ) )
 
