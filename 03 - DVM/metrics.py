@@ -31,12 +31,10 @@ class Metrics:
     for value in range(1, len(values)+1):
       selected = numpy.array( values[0:value] )
       nselected = numpy.array( values[value:len(values)] )
-
       met = Metrics( ( selected == True ).sum() , ( nselected == False ).sum() , ( selected == False ).sum() , ( nselected == True ).sum()  )
       precision.append( met.precision() )
       recall.append( met.recall() )
-
-    plt.plot(precision, recall, 'ro')
+    plt.plot(recall, precision, 'ro')
 
     plt.xlabel('Recall')
     plt.ylabel('Precision')
