@@ -14,9 +14,9 @@ class Validation:
 
     # Returns true if line in transcription file represents valid image.
     # All images in the valdation set are in the files that are
-    # greater than 300
+    # greater than or equal 300
     def check_if_valid_line(self, valid_img):
-        return int(valid_img.split("-")[0]) > 300
+        return int(valid_img.split("-")[0]) >= 300
 
     def get_key( self, item ):
       return item[0]
@@ -41,7 +41,7 @@ class Validation:
                 content = img.split()[1]
                 actual_jpg = location.split("-")[0]
                 if jpg != int(actual_jpg):
-                    if jpg > 279: # Only the jpg files 270-279 belong to the train set.
+                    if int(actual_jpg) > 279: # Only the jpg files 270-279 belong to the train set.
                         break
                     jpg = int(actual_jpg)
                     counter = 1
