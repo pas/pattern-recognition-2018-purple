@@ -34,8 +34,7 @@ for page in os.listdir(pathToProvidedData + "images"):
         #print (path)
         new_image = imageP.crop(path)
         new_image = preprocess.binarization( new_image )
-        # The following method does not work properly for all jpg files; so commented this out for the moment.
-        #new_image = ImageProcessor.trim_white_space_on_array( new_image )
+        new_image = ImageProcessor.trim_white_space_on_array( new_image )
         images.append( new_image )
         new_image = Image.fromarray( new_image )
         new_image = ImageProcessor.resize_image( new_image, 200 )
