@@ -21,8 +21,35 @@ class Validation:
     def get_key( self, item ):
       return item[0]
 
+    def load_all_validation_images(self):
+        validation_images = []
+        valid_images = open("data/PatRec17_KWS_Data/ground-truth/transcription.txt", "r")
+        counter = 0
+        jpg = 300
+
+        for valid_img in valid_images:
+            if Validation().check_if_valid_line(valid_img): # Only lines which store information about image of valid set are relevant.
+                counter = counter + 1
+                actual_jpg = valid_img.split("-")[0]
+                if jpg != int(actual_jpg):
+                    jpg = int(actual_jpg)
+                    counter = 1
+                content_of_img = valid_img.split()[1]
+                path_to_img = "images/"+ str(jpg) +"/image-" + str(counter) + ".png"
+
+                # open valid image and calculate DTW for this valid img and the train img.
+                image = ImageProcessor( path_to_img )
+                validation_features = image.calculate_feature_vectors()
+                validation_string = valid_img.split(" ")[1][:-1]
+
+                validation_images.append( [ validation_features , validation_string ] )
+        return validation_images
+
     @staticmethod
     def do_validation():
+
+        validation_img = Validation().load_all_validation_images()
+
         keywords = open("data/PatRec17_KWS_Data/task/keywords.txt", "r")
 
         # Do validation for each keyword.
@@ -54,33 +81,15 @@ class Validation:
             dtw = DTW()
 
             for train_img in train_images:
-                valid_images = open("data/PatRec17_KWS_Data/ground-truth/transcription.txt", "r")
-                counter = 0
-                jpg = 300
 
                 DTW_values = [] # Stores DTW values of train_img and each image of valid set. Also stores the word of the valid image.
                 train_features = train_img.calculate_feature_vectors()
 
-                for valid_img in valid_images:
-                    if Validation().check_if_valid_line(valid_img): # Only lines which store information about image of valid set are relevant.
-                        counter = counter + 1
-                        actual_jpg = valid_img.split("-")[0]
-                        if jpg != int(actual_jpg):
-                            jpg = int(actual_jpg)
-                            counter = 1
-                        content_of_img = valid_img.split()[1]
-                        path_to_img = "images/"+ str(jpg) +"/image-" + str(counter) + ".png"
-
-                        # open valid image and calculate DTW for this valid img and the train img.
-                        image = ImageProcessor( path_to_img )
-                        validation_features = image.calculate_feature_vectors()
-
-                        dist, _ = dtw.distance( train_features , validation_features , 4 )
-                        validation_string = valid_img.split(" ")[1][:-1]
-                        if( validation_string.startswith( keyword ) ):
-                          print( "Found same text with distance " + str(dist) + ": " + path_to_img )
-                        DTW_values.append( [ dist , keyword , validation_string , validation_string.startswith( keyword ) ] )
-
+                for validation_features , validation_string in validation_img:
+                    dist, _ = dtw.distance( train_features , validation_features , 4 )
+                    if( validation_string.startswith( keyword ) ):
+                      print( "Found same text with distance " + str(dist) + ": " + path_to_img )
+                    DTW_values.append( [ dist , keyword , validation_string , validation_string.startswith( keyword ) ] )
 
                 DTW_values = sorted( DTW_values , key=Validation().get_key )
                 keyword_valid_match = [ a[3] for a in DTW_values ] # Takes last column for each array in DTW_values.
