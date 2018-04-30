@@ -51,7 +51,7 @@ The directory is constructed the following way
 
 ## Usage
 
-runner.py is the main programm.
+runner.py is the main program.
 First, it does preprocess the given jpg files.
 It splits the jpg images into its words. For each jpg file a subfolder in images is created and the words of this jpg are stored in this folder.
 E.g. all words of 270.jpg are stored in images/270, named in increasing order (image-1, image-2 etc.) of their appearance in the jpg file.
@@ -60,11 +60,6 @@ For each keyword the related train images is fetched. This train image is then c
 
 ## Results and Interpretation
 
-You can find our precision recall plots in the plots folder. For each keyword there is a separate folder. For all train images which represent the keyword validation is done and a plot is calculated.
+You can find our precision recall plots in the plots folder after having run the main program (runner.py). For each keyword there is a separate folder. For all train images which represent the keyword, validation is done and a plot gets calculated.
 
-TODO: intrpretation
-For the plots, we would that the precision decreases with an increasing recall and that the recall
-
-## Conclusions
-
-TODO
+For the plots, we would expect that the precision decreases with an increasing recall. This would give a falling curve. Since our sorted DTW vectors do not contain the positives first and the negatives in the end, we can not observe this falling curve in our plots.
