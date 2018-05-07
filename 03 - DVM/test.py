@@ -167,7 +167,11 @@ class Tests(unittest.TestCase):
     print( dist )
       
     # train
-    image3 = ImageProcessor( "images/270/image-27.png" ) #of
+    image3 = ImageProcessor( "binarization-test.png" ) # image-27.img = of
+    for line in image3.image :
+        print ( line )
+
+    print( image3.image )
     features3 = image3.calculate_feature_vectors()
     
     # find

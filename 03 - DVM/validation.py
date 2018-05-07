@@ -93,6 +93,9 @@ for keyword in keywords:
                 validation_string = valid_img.split(" ")[1][:-1]
                 if( validation_string.startswith( keyword ) ):
                   print( "Found same text with distance " + str(dist) + ": " + path_to_img )
+                  
+                # There is somehow a problem with the data because there are sometimes
+                # some commas, double stopps, etc. added
                 DTW_values.append( [ dist , keyword , validation_string , validation_string.startswith( keyword ) ] )
                 
             DTW_values = sorted( DTW_values , key=get_key )
