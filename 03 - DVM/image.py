@@ -25,13 +25,13 @@ class ImageProcessor:
   def trim_white_space_on_array( image ):      
       indices_inner_image = numpy.where(image == 0)
       
-      min_x = numpy.amin(indices_inner_image[0])
-      max_x = numpy.amax(indices_inner_image[0])
+      min_x = numpy.amin(indices_inner_image[0]) if indices_inner_image[0].size else 0
+      max_x = numpy.amax(indices_inner_image[0]) if indices_inner_image[0].size else image.shape[0]
       
-      min_y = numpy.amin(indices_inner_image[1])
-      max_y = numpy.amax(indices_inner_image[1])
+      min_y = numpy.amin(indices_inner_image[1]) if indices_inner_image[1].size else 0
+      max_y = numpy.amax(indices_inner_image[1]) if indices_inner_image[1].size else image.shape[1]
       
-      return image[min_x:max_x+1,min_y:max_y+1]
+      return image[min_x:max_x,min_y:max_y]
   
   #
   # Resizes the png-image to a given heigth, aspect-ratio
