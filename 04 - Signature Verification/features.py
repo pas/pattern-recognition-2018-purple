@@ -6,6 +6,7 @@
 
 from math import sqrt
 import pandas as pd
+import numpy as np
 
 class Features:
 
@@ -81,9 +82,13 @@ class Features:
         """
         normalized_fvd = {}
         for key, signature in features_dict.items():
-            max_values = self._find_feature_maxima(signature)
-            print(max_values)
-
+            max_values = np.array(self._find_feature_maxima(signature))
+            normalized_signature = []
+            for feature_vector in signature:
+                normalized_feature_vector = np.array(feature_vector) / max_values
+                normalized_signature.append(list(normalized_feature_vector))
+            normalized_fvd[key] = normalized_signature
+        return normalized_fvd
 
     def _find_feature_maxima(self, signature):
         """

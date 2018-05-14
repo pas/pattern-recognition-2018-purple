@@ -31,4 +31,7 @@ ground_truth = Parser.get_ground_truth(pathToProvidedData + "/gt.txt")
 # get ground truth with classes True/False (True <-> "g", False <-> "f")
 ground_truth_boolean = Parser.get_ground_truth(pathToProvidedData + "/gt.txt", use_boolean=True)
 
+enrollment_features_normalized = Features().normalize_signature_features(enrollment_features)
+verification_features_normalized = Features().normalize_signature_features(verification_features)
+
 print(enrollment_features)
