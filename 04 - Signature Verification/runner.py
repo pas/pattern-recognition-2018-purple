@@ -25,4 +25,10 @@ enrollment_features = Features().generate_features(enrollment_raw_data)
 verification_raw_data = Parser.read(pathToVerificationData)
 verification_features = Features().generate_features(verification_raw_data)
 
+# get ground truth with classes g/f
+ground_truth = Parser.get_ground_truth(pathToProvidedData + "/gt.txt")
+
+# get ground truth with classes True/False (True <-> "g", False <-> "f")
+ground_truth_boolean = Parser.get_ground_truth(pathToProvidedData + "/gt.txt", use_boolean=True)
+
 print(enrollment_features)
