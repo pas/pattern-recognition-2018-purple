@@ -21,4 +21,5 @@
   - normalizing features
   - creating a User object for each line in `SignatureVerification/users.txt`
   - demonstrating the calculation and output of a dissimilarity dict for a specific user and target signature
+- `parse.py` has a method `get_ground_truth` to load a ground truth dictionary for the verification signatures. Not used yet.
   
