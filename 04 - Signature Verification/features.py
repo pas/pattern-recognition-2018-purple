@@ -45,3 +45,24 @@ class Features:
         feature_values.append(float(time_slice[5])) # pressure
         feature_values.append(float('0') if  float(time_slice[0])==float('0') else (distance / float(time_slice[0]))) # speed
         return feature_values
+
+    def normalize_feature_vectors(self, feature_vectors_dict):
+        """
+        Takes as input a dictionary with lists of feature vectors as values, returns the same dictionary with each
+        feature vector normalized with respect to its maximum. Note: normalization is done over individual
+        feature vectors (i.e. list of 4 features).
+
+        :param feature_vectors_dict:    dictionary of the form <signature_filename> -> <list of feature vectors>
+        :return:                        same dictionary, with each feature vector normalized w.r.t. its maximum
+        """
+        normalized_fvd = {}
+        for key, feature_vec_list in feature_vectors_dict.items():
+            normalized_list = []
+            for feature_vec in feature_vec_list:
+                normalized_feature_vec = []
+                max_val = max(feature_vec)
+                for feature in feature_vec:
+                    normalized_feature_vec.append(feature / max_val)
+                normalized_list.append(normalized_feature_vec)
+            normalized_fvd[key] = normalized_list
+        return normalized_fvd
