@@ -5,8 +5,12 @@
 ##
 
 from math import sqrt
+import pandas as pd
 
 class Features:
+
+    EXPECTED_NUM_FEATURES = 4
+
     def __init__(self):
         return
 
@@ -66,3 +70,31 @@ class Features:
                 normalized_list.append(normalized_feature_vec)
             normalized_fvd[key] = normalized_list
         return normalized_fvd
+
+    def normalize_signature_features(self, features_dict):
+        """
+        Takes as input a dictionary with lists of feature vectors as values, returns the same dictionary with each
+        signature (i.e. each dictionary value) normalized individually.
+
+        :param features_dict:   dictionary of the form <signature_filename> -> <list of feature vectors>
+        :return:                same dictionary, with each signature normalized individually
+        """
+        normalized_fvd = {}
+        for key, signature in features_dict.items():
+            max_values = self._find_feature_maxima(signature)
+            print(max_values)
+
+
+    def _find_feature_maxima(self, signature):
+        """
+        Finds the maximum values for each of the EXPECTED_NUM_FEATURES features for a single signature.
+
+        :param signature:   a list of feature vectors representing an individual signature (i.e. one entry in a features
+                            dictionary
+        :return:            maximum values for each of the EXPECTED_NUM_FEATURES features
+        """
+        dataframe = pd.DataFrame(signature)
+        max_values = dataframe.max(axis=0)
+        max_values_list = list(max_values)
+        assert len(max_values_list) == self.EXPECTED_NUM_FEATURES
+        return max_values_list
