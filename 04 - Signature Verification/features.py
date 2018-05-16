@@ -54,22 +54,23 @@ class Features:
     def normalize_signature_features(self, features_dict):
         """
         Takes as input a dictionary with lists of feature vectors as values, returns the same dictionary with each
-        signature (i.e. each dictionary value) normalized individually.
+        signature (i.e. each dictionary value) min-max-normalized individually.
 
         :param features_dict:   dictionary of the form <signature_filename> -> <list of feature vectors>
-        :return:                same dictionary, with each signature normalized individually
+        :return:                same dictionary, with each signature min-max-normalized individually
         """
         normalized_fvd = {}
         for key, signature in features_dict.items():
-            max_values = np.array(self._find_feature_maxima(signature))
+            max_values, min_values = self._find_feature_max_min(signature)
+            minmax = max_values - min_values
             normalized_signature = []
             for feature_vector in signature:
-                normalized_feature_vector = np.array(feature_vector) / max_values
+                normalized_feature_vector = (np.array(feature_vector) - min_values) / minmax
                 normalized_signature.append(list(normalized_feature_vector))
             normalized_fvd[key] = normalized_signature
         return normalized_fvd
 
-    def _find_feature_maxima(self, signature):
+    def _find_feature_max_min(self, signature):
         """
         Finds the maximum values for each of the EXPECTED_NUM_FEATURES features for a single signature.
 
@@ -79,6 +80,8 @@ class Features:
         """
         dataframe = pd.DataFrame(signature)
         max_values = dataframe.max(axis=0)
+        min_values = dataframe.min(axis=0)
         max_values_list = list(max_values)
+        min_values_list = list(min_values)
         assert len(max_values_list) == self.EXPECTED_NUM_FEATURES
-        return max_values_list
+        return np.array(max_values_list), np.array(min_values_list)
