@@ -1,5 +1,5 @@
 from dtw import DTW
-
+import numpy as np
 
 class User:
 
@@ -39,8 +39,8 @@ class User:
                                     <user enrolment signature id> -> <dissimilarity of target signature to that enrolment signature>
         """
         dtw = DTW()
-        dissimilarities = {}
+        dissimilarities = []
         for key, enrolment_signature in self.enrolment_signatures.items():
             dissim, matrix = dtw.distance(enrolment_signature, target_signature, self.WINDOW_SIZE)
-            dissimilarities[key] = dissim
-        return dissimilarities
+            dissimilarities.append(dissim)
+        return np.mean(np.asarray(dissimilarities))
