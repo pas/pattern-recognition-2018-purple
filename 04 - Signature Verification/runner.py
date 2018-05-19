@@ -7,6 +7,7 @@ from parse import Parser
 from features import Features
 from user import User
 import output
+from multiprocessing import Pool
 
 # part 1: Read signature properties, calculate feature vectors.
 enrollment_signatures = []
@@ -55,23 +56,29 @@ with open(pathToProvidedData + "/users.txt") as users_file:
 print("done")
 
 #user can now calculate dissimilarity of a signature w.r.t. to their enrolment signatures
-#Getting results TODO slow, look for Mean AP
+#Getting results MultiThreaded (5 ver signatures executes in 11 mins for 30 users)
+#TODO look for Mean AP
 
-signatures_file = open("signatures.txt", "w")
+print("Processing...")
 
-for user in users:
+def calculateUserDistances(users_index):
+    print("User " + users_index + " executing in thread")
     dissimilarities = {}
     verLoc = 0
     for verification in verification_features_normalized:
-        dissimilarities[verification] = users[user].calculate_signature_dissimilarity(verification_features_normalized[verification])
+        dissimilarities[verification] = users[users_index].calculate_signature_dissimilarity(verification_features_normalized[verification])
         verLoc += 1
-        if(verLoc % 50 == 0):
-            print("Processed " + str(verLoc) + " verification signatures.")
-            break # break for now        
-    
-    print("Result :")
-    signatures_file.write(output.print_dissimilarities(user, dissimilarities) + "\n" )
-    break # break for now
+        if(verLoc % 100 == 0):
+            print("User " + users_index + " Thread Processed " + str(verLoc) + " verification signatures.")
+            #break
+
+    return output.print_dissimilarities(users_index, dissimilarities) + "\n" 
+
+signatures_file = open("signatures.txt", "w")
+
+with Pool(processes=8) as pool:
+    results = pool.map(calculateUserDistances, users)
+    for resultTxt in results:
+        signatures_file.write(resultTxt)
 
 signatures_file.close()
-
