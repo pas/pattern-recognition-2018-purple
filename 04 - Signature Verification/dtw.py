@@ -1,4 +1,5 @@
 import numpy as numpy
+import math
 
 
 ##
@@ -33,15 +34,15 @@ class DTW:
         for i in range(0, n):
             for j in range(max(1, i - w), min(m, i + w)):
                 if ((i, j) != (0, 0)):
-                    cost = self.feature_distance(s[i], t[j])
+                    cost = self.feature_distance(s[i] - t[j])
                     res[i][j] = cost + min(res[i - 1][j],  # insertion
                                            res[i][j - 1],  # deletion
                                            res[i - 1][j - 1])  # substitution
 
         return res[n - 1][m - 1], res
 
-    def feature_distance(self, value1, value2):
-        return numpy.linalg.norm(value1 - value2)
+    def feature_distance(self, value_array):
+        return math.sqrt(value_array[0]**2 + value_array[1]**2 + value_array[2]**2 + value_array[3]**2)
 
 
 
