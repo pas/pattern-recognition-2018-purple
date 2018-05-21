@@ -2,7 +2,6 @@
 # Main file.
 #
 
-import os
 from parse import Parser
 from features import Features
 from user import User
@@ -19,12 +18,14 @@ pathToVerificationData = pathToProvidedData + "verification/"
 
 print("loading data, generating features")
 
-# enrollment_raw_data is a dictionary. The key is the txt file name of the signature. The value is an array which includes an an array
+# enrollment_raw_data is a dictionary. The key is the txt file name of the signature.
+# The value is an array which includes an array
 # for each timestamp with the properties for this timestamp.
 enrollment_raw_data = Parser.read(pathToEnrollmentData)
 #enrollment_raw_data["001-g-01.txt"]
 
-# enrollment_features is a dictionary. The key is the txt file name of the signature. The value is an array which includes an array
+# enrollment_features is a dictionary. The key is the txt file name of the signature.
+# The value is an array which includes an array
 # for each timestamp with the feature for that timestamp.
 enrollment_features = Features().generate_features(enrollment_raw_data)
 #enrollment_features["001-g-01.txt"])
@@ -74,11 +75,11 @@ def calculateUserDistances(users_index):
 
     return output.print_dissimilarities(users_index, dissimilarities) + "\n" 
 
-signatures_file = open("signatures.txt", "w")
+#signatures_file = open("signatures.txt", "w")
 
-with Pool(processes=8) as pool:
-    results = pool.map(calculateUserDistances, users)
-    for resultTxt in results:
-        signatures_file.write(resultTxt)
+results = map(calculateUserDistances, users)
+for resultTxt in results:
+    signatures_file = open("signatures-" + resultTxt[0:3] + ".txt", "w")
+    signatures_file.write(resultTxt + "\n")
+    signatures_file.close();
 
-signatures_file.close()
