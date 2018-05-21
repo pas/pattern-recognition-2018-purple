@@ -100,7 +100,7 @@ for file in os.listdir(signature_directory):
         line_split = line.split(",")
         if(len(line_split) < 2):
             continue
-        if(ground_truth.get(line_split[0]) in line_split[2]):
+        if(ground_truth.get(line_split[0]) is not None and ground_truth.get(line_split[0]) in line_split[2]):
             correct = correct + 1
         else:
             incorrect = incorrect + 1
