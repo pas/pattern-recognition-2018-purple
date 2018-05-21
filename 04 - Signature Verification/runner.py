@@ -2,11 +2,14 @@
 # Main file.
 #
 import os
+import time
 from parse import Parser
 from features import Features
 from user import User
 import output
 from multiprocessing import Pool
+
+total_time = time.time()
 
 # part 1: Read signature properties, calculate feature vectors.
 enrollment_signatures = []
@@ -63,6 +66,7 @@ print("done")
 print("Processing...")
 
 def calculateUserDistances(users_index):
+    start_time = time.time()
     print("User " + users_index + " executing in thread")
     dissimilarities = {}
     verLoc = 0
@@ -73,6 +77,7 @@ def calculateUserDistances(users_index):
             print("User " + users_index + " Thread Processed " + str(verLoc) + " verification signatures.")
             #break
 
+    print("--- %s seconds ---" % (time.time() - start_time))
     return output.print_dissimilarities(users_index, dissimilarities) + "\n" 
     
 signature_directory = "signatures"
@@ -80,8 +85,8 @@ signature_directory = "signatures"
 if not os.path.exists(signature_directory):
     os.makedirs(signature_directory)
 
-results = map(calculateUserDistances, users)
-for resultTxt in results:
+for user in users:
+    resultTxt = calculateUserDistances(user)
     signatures_file = open(signature_directory + "/signatures-" + resultTxt[0:3] + ".txt", "w")
     signatures_file.write(resultTxt + "\n")
     signatures_file.close();
@@ -103,3 +108,5 @@ for file in os.listdir(signature_directory):
 print("correct= " + str(correct))
 print("incorrect = " + str(incorrect))
 print("correct/incorrect = " + str(correct/(incorrect+correct)))
+
+print("TOTAL TIME: %s seconds ---" % (time.time() - total_time))
