@@ -40,6 +40,6 @@ class Parser:
                 is_genuine = entry[1].strip()
                 if use_boolean:
                     is_genuine = True if is_genuine == "g" else False
-                ground_truth[entry[0] + ".txt"] = is_genuine
+                ground_truth[entry[0]] = is_genuine
 
         return ground_truth

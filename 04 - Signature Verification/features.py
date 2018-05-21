@@ -15,7 +15,8 @@ class Features:
     def __init__(self):
         return
 
-    # Generates a dictionary. The key is the name of the signature txt file. The value is the feature vector of the signature.
+    # Generates a dictionary. The key is the name of the signature txt file.
+    # The value is the feature vector of the signature.
     def generate_features(self, raw_data):
         features = {}
         for k, v in raw_data.items():
@@ -29,11 +30,14 @@ class Features:
         feature_vector = []
 
         distance = float('0') # Stores already made distance. Needed to calculate the speed.
-        previous_point = [ float(data[0][1]), float(data[0][2]) ] # Starting point [x,y] of signature. Needed to calculate already made distance.
+        # Starting point [x,y] of signature. Needed to calculate already made distance.
+        previous_point = [ float(data[0][1]), float(data[0][2]) ]
+        
 
         for time_slice in data: # Iterate through the timepoints.
             actual_point = [ float(time_slice[1]), float(time_slice[2]) ]
-            distance = distance + self.calculate_distance(previous_point, actual_point) # Calculates the distance made so far.
+            # Calculates the distance made so far.
+            distance = distance + self.calculate_distance(previous_point, actual_point)
             feature_vector.append( self.feature_values_at_timepoint( distance, time_slice))
 
             previous_point = actual_point
@@ -48,7 +52,8 @@ class Features:
         feature_values.append(float(time_slice[1])) # x
         feature_values.append(float(time_slice[2])) # y
         feature_values.append(float(time_slice[5])) # pressure
-        feature_values.append(float('0') if  float(time_slice[0])==float('0') else (distance / float(time_slice[0]))) # speed
+        # speed
+        feature_values.append(float('0') if  float(time_slice[0])==float('0') else (distance / float(time_slice[0]))) 
         return feature_values
 
     def normalize_signature_features(self, features_dict):
