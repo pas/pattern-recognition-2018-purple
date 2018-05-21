@@ -20,14 +20,13 @@ class DTW:
         m = len(t)
 
         res = numpy.empty((n, m), dtype=numpy.dtype('float'))
-        res.shape = (n, m)
+        #res.shape = (n, m)
         res.fill(float('inf'))
+        
+        #res2 = [n][m]
 
-        w = max(w, abs(n - m))  # adapt window size (*)
-
-        for i in range(0, n):
-            for j in range(0, m):
-                res[i][j] = float('inf')
+        #w = min(w, int(abs(n - m)/2))  # adapt window size (*)
+        w = int(max(n, m)*0.1)
 
         res[0][0] = 0
 
