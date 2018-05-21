@@ -1,7 +1,7 @@
 #
 # Main file.
 #
-
+import os
 from parse import Parser
 from features import Features
 from user import User
@@ -74,12 +74,32 @@ def calculateUserDistances(users_index):
             #break
 
     return output.print_dissimilarities(users_index, dissimilarities) + "\n" 
+    
+signature_directory = "signatures"
 
-#signatures_file = open("signatures.txt", "w")
+if not os.path.exists(signature_directory):
+    os.makedirs(signature_directory)
 
 results = map(calculateUserDistances, users)
 for resultTxt in results:
-    signatures_file = open("signatures-" + resultTxt[0:3] + ".txt", "w")
+    signatures_file = open(signature_directory + "/signatures-" + resultTxt[0:3] + ".txt", "w")
     signatures_file.write(resultTxt + "\n")
     signatures_file.close();
+    
+correct = 0
+incorrect = 0
 
+for file in os.listdir(signature_directory):
+    signatures_file = open(signature_directory + "/" + file, "r")
+    for line in signatures_file:
+        line_split = line.split(",")
+        if(len(line_split) < 2):
+            continue
+        if(ground_truth.get(line_split[0]) in line_split[2]):
+            correct = correct + 1
+        else:
+            incorrect = incorrect + 1
+
+print("correct= " + str(correct))
+print("incorrect = " + str(incorrect))
+print("correct/incorrect = " + str(correct/(incorrect+correct)))
