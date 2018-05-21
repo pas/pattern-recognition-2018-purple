@@ -25,7 +25,8 @@ class DTW:
         
         #res2 = [n][m]
 
-        #w = min(w, int(abs(n - m)/2))  # adapt window size (*)
+        # Sakobe-Band as described in:
+        # http://www.cs.ucr.edu/~eamonn/DTW_myths.pdf
         w = int(max(n, m)*0.1)
 
         res[0][0] = 0
