@@ -65,22 +65,7 @@ print("done")
 
 print("Processing...")
 
-def calculateUserDistances(users_index):
-    start_time = time.time()
-    print("User " + users_index + " executing in thread")
-    dissimilarities = {}
-    verLoc = 0
-    for verification in verification_features_normalized:
-        if(users_index not in verification):
-            continue
-        dissimilarities[verification] = users[users_index].calculate_signature_dissimilarity(verification_features_normalized[verification])
-        verLoc += 1
-        if(verLoc % 100 == 0):
-            print("User " + users_index + " Thread Processed " + str(verLoc) + " verification signatures.")
-            #break
-
-    print("--- %s seconds ---" % (time.time() - start_time))
-    return output.print_dissimilarities(users_index, dissimilarities) + "\n" 
+ 
     
 signature_directory = "signatures"
 
