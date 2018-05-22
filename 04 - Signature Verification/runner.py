@@ -1,13 +1,15 @@
 #
 # Main file.
 #
-
 import os
+import time
 from parse import Parser
 from features import Features
 from user import User
 import output
 from multiprocessing import Pool
+
+total_time = time.time()
 
 # part 1: Read signature properties, calculate feature vectors.
 enrollment_signatures = []
@@ -19,12 +21,14 @@ pathToVerificationData = pathToProvidedData + "verification/"
 
 print("loading data, generating features")
 
-# enrollment_raw_data is a dictionary. The key is the txt file name of the signature. The value is an array which includes an an array
+# enrollment_raw_data is a dictionary. The key is the txt file name of the signature.
+# The value is an array which includes an array
 # for each timestamp with the properties for this timestamp.
 enrollment_raw_data = Parser.read(pathToEnrollmentData)
 #enrollment_raw_data["001-g-01.txt"]
 
-# enrollment_features is a dictionary. The key is the txt file name of the signature. The value is an array which includes an array
+# enrollment_features is a dictionary. The key is the txt file name of the signature.
+# The value is an array which includes an array
 # for each timestamp with the feature for that timestamp.
 enrollment_features = Features().generate_features(enrollment_raw_data)
 #enrollment_features["001-g-01.txt"])
@@ -62,23 +66,49 @@ print("done")
 print("Processing...")
 
 def calculateUserDistances(users_index):
+    start_time = time.time()
     print("User " + users_index + " executing in thread")
     dissimilarities = {}
     verLoc = 0
     for verification in verification_features_normalized:
+        if(users_index not in verification):
+            continue
         dissimilarities[verification] = users[users_index].calculate_signature_dissimilarity(verification_features_normalized[verification])
         verLoc += 1
         if(verLoc % 100 == 0):
             print("User " + users_index + " Thread Processed " + str(verLoc) + " verification signatures.")
             #break
 
+    print("--- %s seconds ---" % (time.time() - start_time))
     return output.print_dissimilarities(users_index, dissimilarities) + "\n" 
+    
+signature_directory = "signatures"
 
-signatures_file = open("signatures.txt", "w")
+if not os.path.exists(signature_directory):
+    os.makedirs(signature_directory)
 
-with Pool(processes=8) as pool:
-    results = pool.map(calculateUserDistances, users)
-    for resultTxt in results:
-        signatures_file.write(resultTxt)
+for user in users:
+    resultTxt = calculateUserDistances(user)
+    signatures_file = open(signature_directory + "/signatures-" + resultTxt[0:3] + ".txt", "w")
+    signatures_file.write(resultTxt + "\n")
+    signatures_file.close();
+    
+correct = 0
+incorrect = 0
 
-signatures_file.close()
+for file in os.listdir(signature_directory):
+    signatures_file = open(signature_directory + "/" + file, "r")
+    for line in signatures_file:
+        line_split = line.split(",")
+        if(len(line_split) < 2):
+            continue
+        if(ground_truth.get(line_split[0]) is not None and ground_truth.get(line_split[0]) in line_split[2]):
+            correct = correct + 1
+        else:
+            incorrect = incorrect + 1
+
+print("correct= " + str(correct))
+print("incorrect = " + str(incorrect))
+print("correct/incorrect = " + str(correct/(incorrect+correct)))
+
+print("TOTAL TIME: %s seconds ---" % (time.time() - total_time))

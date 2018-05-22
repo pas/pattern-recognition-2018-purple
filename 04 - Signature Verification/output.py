@@ -14,10 +14,13 @@ def print_dissimilarities(user_id, dissimilarities, target_signature_id=None):
     :return:                    None
     """
     sorted_dissimilarities = sorted(dissimilarities.items(), key=operator.itemgetter(1))
-    print_string = user_id
+    print_string = user_id + "\n" + "===\n"
     if target_signature_id is not None:
         print_string += ", target signature id: " + target_signature_id
-    for item in sorted_dissimilarities:
-        print_string += ", " + item[0].replace(".txt","") + ", " + str(item[1])
-    print(print_string)
+    for number, item in enumerate(sorted_dissimilarities):
+        if(number < 20):
+            print_string += item[0].replace(".txt","") + ", " + str(item[1]) + ", g\n"
+        else:
+            print_string += item[0].replace(".txt","") + ", " + str(item[1]) + ", f\n"
+
     return print_string
