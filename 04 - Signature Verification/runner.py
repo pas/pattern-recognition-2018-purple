@@ -87,14 +87,17 @@ signature_directory = "signatures"
 if not os.path.exists(signature_directory):
     os.makedirs(signature_directory)
 
-for user in users:
-    resultTxt = calculateUserDistances(user)
-    signatures_file = open(signature_directory + "/signatures-" + resultTxt[0:3] + ".txt", "w")
-    signatures_file.write(resultTxt + "\n")
-    signatures_file.close();
+with Pool(processes=2) as pool:
+    results = pool.map(calculateUserDistances, users)
+    for resultTxt in results:
+        signatures_file = open(signature_directory + "/signatures-" + resultTxt[0:3] + ".txt", "w")
+        signatures_file.write(resultTxt + "\n")
+        signatures_file.close();
     
-correct = 0
-incorrect = 0
+true_positive = 0
+true_negative = 0
+false_positive = 0
+false_negative = 0
 
 for file in os.listdir(signature_directory):
     signatures_file = open(signature_directory + "/" + file, "r")
@@ -102,13 +105,32 @@ for file in os.listdir(signature_directory):
         line_split = line.split(",")
         if(len(line_split) < 2):
             continue
-        if(ground_truth.get(line_split[0]) is not None and ground_truth.get(line_split[0]) in line_split[2]):
-            correct = correct + 1
-        else:
-            incorrect = incorrect + 1
+        grount_truth_string = ground_truth.get(line_split[0])
+        if(grount_truth_string is not None and grount_truth_string in line_split[2]):
+            if(grount_truth_string == "g"):
+                true_positive = true_positive + 1
+            else:
+                true_negative = true_negative + 1
+        elif(grount_truth_string is not None):
+            if(grount_truth_string == "g"):
+                false_negative = false_negative + 1
+            else:
+                false_positive = false_positive + 1
+total = true_positive + true_negative + false_positive + false_negative
 
-print("correct= " + str(correct))
-print("incorrect = " + str(incorrect))
-print("correct/incorrect = " + str(correct/(incorrect+correct)))
+print("correct= " + str(true_positive + true_negative))
+print("incorrect = " + str(false_positive + false_negative))
+print("correct/incorrect = " + str((true_positive + true_negative) / total))
+print("\n")
+
+print("true_positive: " + str(true_positive))
+print("true_negatives: " + str(true_negative))
+print("false_positive: " + str(false_positive))
+print("false_negatives: " + str(false_negative))
+print("\n")
+
+print("precision = " + str(true_positive / (true_positive + false_positive)))
+print("recall = " + str(true_positive / (true_positive + false_negative)))
+print("\n")
 
 print("TOTAL TIME: %s seconds ---" % (time.time() - total_time))
