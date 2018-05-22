@@ -1,5 +1,19 @@
 # Project 2a
 
+### VALIDATION - LAST TASK
+
+The code has been slightly altered in order to accomodate the new file format without the labels. The code was extended as to be able to run both formats.
+
+Inside the validation folder the mnist_validation dataset can be found. The program will print all preditctions to standard output and additionally to a file also found in the folder "validation" in following format:
+
+{{ row_id }}: {{ predicted_class }}
+
+row_id [0..9999]
+number [0..9]
+
+Short summary of occurences of numbers:
+{0: 988, 1: 1145, 2: 1038, 3: 1008, 4: 987, 5: 886, 6: 954, 7: 1026, 8: 972, 9: 996}
+
 ## How to run
 
 You can open source file to modify parameters cross_validation and svm kernels. If cross validation is enabled, 
