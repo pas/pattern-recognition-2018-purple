@@ -71,6 +71,8 @@ def calculateUserDistances(users_index):
     dissimilarities = {}
     verLoc = 0
     for verification in verification_features_normalized:
+        if(users_index not in verification):
+            continue
         dissimilarities[verification] = users[users_index].calculate_signature_dissimilarity(verification_features_normalized[verification])
         verLoc += 1
         if(verLoc % 100 == 0):

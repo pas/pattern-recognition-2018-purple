@@ -27,7 +27,12 @@ class DTW:
 
         # Sakobe-Band as described in:
         # http://www.cs.ucr.edu/~eamonn/DTW_myths.pdf
-        w = int(max(n, m)*0.1)
+        # leads to bad results since the band is too narrow
+        # w = int(max(n, m)*0.1
+        
+        # a wider band leads to a good solution between
+        # accuracy and speed:
+        w = max(n, m)
 
         res[0][0] = 0
 
