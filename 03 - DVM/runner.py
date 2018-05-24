@@ -42,4 +42,4 @@ for page in os.listdir(pathToProvidedData + "images"):
         number += 1
 
 # part 2: Training and validation.
-Validation.do_validation();
+Validation.do_validation( pathToProvidedData );

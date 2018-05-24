@@ -1,20 +1,28 @@
 import numpy as np
 
+# Added later!
+VECTOR_SIZE = 200
+
 class Features:
 
   def generateFV(self, x1, x2):
     featureVector = []
 
-    featureVector.append(self.lowerContour(x1))
-    featureVector.append(self.upperContour(x1))
-    featureVector.append(self.bwTransitions(x1))
-    featureVector.append(self.blackPxFractionWindow(x1))
-    featureVector.append(self.blackPxFractionLcUc(x1))
+    # Added normalization (added later!)
+    featureVector.append( self.normalize( self.lowerContour(x1) , 0 , VECTOR_SIZE ) )
+    featureVector.append( self.normalize( self.upperContour(x1) , 0 , VECTOR_SIZE ) )
+    featureVector.append( self.normalize( self.bwTransitions(x1) , 0 , VECTOR_SIZE/2 ) )
+    featureVector.append( self.blackPxFractionWindow(x1))
+    featureVector.append( self.blackPxFractionLcUc(x1))
     a1, a2 = self.gradient(x1, x2)
-    featureVector.append( a1  )
-    featureVector.append( a2 )
+    featureVector.append( self.normalize( a1 , -VECTOR_SIZE , VECTOR_SIZE ) )
+    featureVector.append( self.normalize( a2 , -VECTOR_SIZE , VECTOR_SIZE ) )
 
     return np.array(featureVector)
+  
+  # Added later!
+  def normalize( self, value , mini , maxi ):
+    return (value-mini) / (maxi-mini)
 
   # The lower Contour is the black pixel on the lowest row
   def lowerContour(self, x):

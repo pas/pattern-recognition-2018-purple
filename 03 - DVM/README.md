@@ -1,5 +1,16 @@
 # Project 3
 
+## VALIDATION - LAST TASK
+
+runner-validation.py can be used to start the validation.
+
+The data is appended to validation-output.txt
+
+### Changes
+Some changes were necesseary to adapt our program to output the correct format. This lead to the creation of a new runner called runner-validation.py and changes especially for validation. Does are cleary marked by all the if statements checking for is_validation.
+
+During the validation we recognized a mature flaw in our code. When constructing the feature vectors the image was not scanned from left to right but from top to bottom. As well we missed out to normalize the features. A small change in the image.py file was done to correct the issue of wrong scanning. As well the features were normalize in image.py. We adapted as well the sakoe-chiba bandwith.
+
 ## Prerequisites
 
 This project runs on python3
@@ -18,10 +29,8 @@ If you already cloned the project, proceed as follows:
 
 2. Then use the following two git commands:
 
-    ```
     git submodule init
     git submodule update
-    ```
 
 It is best to use a virtual environment. Then install requirements with:
 
@@ -48,6 +57,7 @@ The directory is constructed the following way
     |- data # PatRec17_KWS_Data
     |- images # Preprocessed images
     |- plots # Precision recall plots generated through validation
+    |- validation # All data for validation
 
 ## Usage
 

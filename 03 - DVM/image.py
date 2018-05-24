@@ -192,10 +192,17 @@ class ImageProcessor:
     feature_calc = Features()
     feature_vectors = []
     
-    # always white
-    previous_line = numpy.full( len( self.image[0] ) , numpy.max( self.image ) , dtype=self.image.dtype )
+    # always white as starting value
+    previous_line = numpy.full( len( numpy.transpose( self.image )[0] ) , numpy.max( self.image ) , dtype=self.image.dtype )
     
-    for line in self.image:
+    #print( "Image length" + str( len( self.image[0] ) ) )
+    #print( "Image heigth" + str( len( numpy.transpose( self.image )[0] ) ) )
+    
+    # 24.5.2018 The image was parsed from top to bottom
+    for line in numpy.transpose( self.image ):
+    #for line in self.image
+      assert( len( line ) == 200 )
+      assert( len( previous_line ) == 200 )
       feature_vectors.append( feature_calc.generateFV( previous_line , line ) )
       previous_line = line
       
