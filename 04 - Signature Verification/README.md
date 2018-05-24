@@ -1,7 +1,7 @@
 # Exercise 04 - Signature Verification
 
 ## Evaluation
-The evaluation output file is called results_signature.txt in the folder Evaluation. 
+The evaluation output file is called `results_signature.txt` in the folder Evaluation. In order to run the evaluation you can simply call `runner.py`. Currently the code spans 4 threads for faster computation and the part of `parse.py` is commented out as there is no ground-truth file for the evaluation.
 
 
 ## Usage
