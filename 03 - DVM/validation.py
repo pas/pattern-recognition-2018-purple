@@ -2,6 +2,7 @@ from image import ImageProcessor
 from dtw import DTW
 from metrics import Metrics
 import os
+import numpy as np
 
 #
 # Validation.
@@ -40,21 +41,59 @@ class Validation:
                 # open valid image and calculate DTW for this valid img and the train img.
                 image = ImageProcessor( path_to_img )
                 validation_features = image.calculate_feature_vectors()
+                
                 validation_string = valid_img.split(" ")[1][:-1]
 
                 validation_images.append( [ validation_features , validation_string ] )
         return validation_images
+    
+    # Added for validation
+    def load_validation_images(self):
+        validation_images = []
+        counter = 0
+        jpg = 305
+        
+        for jpg in range(305, 310):
+          directory = "images/" + str(jpg)
+          counter = 0
+          if( os.path.exists( directory ) ):
+            for filename in os.listdir( directory ):
+              counter = counter + 1
+              path_to_img = "images/"+ str(jpg) +"/image-" + str(counter) + ".png"
+              image = ImageProcessor( path_to_img )
+              validation_features = image.calculate_feature_vectors()
+              # ID is constructed out of the file number and the image nr
+              validation_string = str(jpg) +"/image-" + str(counter)
+              validation_images.append( [ validation_features , validation_string ] )
+          else:
+            print( "ERROR: Missing data for images/" + str(page_number) )
+
+        return validation_images
 
     @staticmethod
-    def do_validation():
+    def do_validation( pathToProvidedData , is_validation=False ):
 
-        validation_img = Validation().load_all_validation_images()
+        if( is_validation ):
+          validation_img = Validation().load_validation_images()
+        else:
+          validation_img = Validation().load_all_validation_images()
 
-        keywords = open("data/PatRec17_KWS_Data/task/keywords.txt", "r")
+        keywords = open(pathToProvidedData + "/task/keywords-1.txt", "r")
 
         # Do validation for each keyword.
         for keyword in keywords:
             keyword = keyword.split("\n")[0] # We do not want to have the linebreak included in the string.
+            
+            #only used for validation run
+            keyword_location = ""
+            # 
+            # The validation set provides us with the exact
+            # location of the word which we simply cut away
+            #
+            if( is_validation ):
+              keyword, keyword_location = keyword.split(",")
+              print( "Word location: " + keyword_location )
+            
             print( "Keyword: " + keyword )
             train_images = [] # Stores train images of the keyword (jpg file and number of word in jpg file).
 
@@ -68,11 +107,11 @@ class Validation:
                 content = img.split()[1]
                 actual_jpg = location.split("-")[0]
                 if jpg != int(actual_jpg):
-                    if int(actual_jpg) > 279: # Only the jpg files 270-279 belong to the train set.
-                        break
+                    if int(actual_jpg) > 279 and int(actual_jpg) != 300: # Only the jpg files 270-279 and 300 belong to the train set.
+                        continue
                     jpg = int(actual_jpg)
                     counter = 1
-                if content.startswith( keyword ):
+                if ( ( content.startswith( keyword ) and not is_validation ) or ( content.startswith( keyword ) and is_validation and keyword_location == location )  ):
                     path_to_img = "images/"+ str(jpg) +"/image-" + str(counter) + ".png"
                     train_images.append( ImageProcessor( path_to_img ) )
                     print( "Found training images: " + "images/"+ str(jpg) +"/image-" + str(counter) + ".png" )
@@ -81,16 +120,44 @@ class Validation:
             dtw = DTW()
 
             for train_img in train_images:
+                print( "Compare to " + train_img.image_name )
 
                 DTW_values = [] # Stores DTW values of train_img and each image of valid set. Also stores the word of the valid image.
                 train_features = train_img.calculate_feature_vectors()
 
                 for validation_features , validation_string in validation_img:
-                    dist, _ = dtw.distance( train_features , validation_features , 4 )
+                    # Widened the sakoe-chiba-bandwith
+                    dist, _ = dtw.distance( train_features , validation_features , 10 )
                     if( validation_string.startswith( keyword ) ):
                       print( "Found same text with distance " + str(dist) + ": " + path_to_img )
                     DTW_values.append( [ dist , keyword , validation_string , validation_string.startswith( keyword ) ] )
 
                 DTW_values = sorted( DTW_values , key=Validation().get_key )
                 keyword_valid_match = [ a[3] for a in DTW_values ] # Takes last column for each array in DTW_values.
-                Metrics.plot_recall_precision( keyword_valid_match, keyword, train_img.image_name )
+                
+                
+                # The expected outcome for the validation is: 
+                # Keyword1, testword_ID1, dissimilarity1, testword_ID2, dissimilarity2, ...
+                # Keyword2, testword_ID1, dissimilarity1, testword_ID2, dissimilarity2, ...
+                # The result is put into the validation-output.txt file
+                if( is_validation ):
+                  # Open file for appending
+                  f=open("validation-output.txt",'ab')
+                  # Remove unnecessary columns
+                  DTW_values = np.array( DTW_values )
+                  DTW_values = np.delete(DTW_values, [1,3], axis=1)
+                  # Swap columns
+                  DTW_values[:,[1,0]] = DTW_values[:,[0,1]]
+                  # Flatten the array from [ [ v11 , v12 ] , [ v21 , v22] ] to [ v11, v12, v21, v22 ]
+                  DTW_values = DTW_values.flatten()
+                  # Add keyword at the beginning
+                  DTW_values = np.insert(DTW_values, 0, keyword)
+                  print ( DTW_values )
+                  # We have to force the DTW_value to a 2D-array because otherwise it
+                  # will output every element in the array as one line
+                  np.savetxt(f, np.atleast_2d(DTW_values), delimiter=",", fmt="%s")
+                  # Close file
+                  f.close()
+                else:
+                  Metrics.plot_recall_precision( keyword_valid_match, keyword, train_img.image_name )
+                
