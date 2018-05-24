@@ -1,5 +1,9 @@
 # Exercise 04 - Signature Verification
 
+## Evaluation
+The evaluation output file is called results_signature.txt in the folder Evaluation. 
+
+
 ## Usage
 - `pip install -r requirements.txt`, preferably in a virtual environment
 - run `runner.py`
