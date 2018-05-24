@@ -1,0 +1,69 @@
+loading data, generating features
+normalizing features
+loading users
+done
+Processing...
+User 001 executing in thread
+--- 4.151866436004639 seconds ---
+User 002 executing in thread
+--- 23.968895196914673 seconds ---
+User 003 executing in thread
+--- 100.83071494102478 seconds ---
+User 004 executing in thread
+--- 23.349666833877563 seconds ---
+User 005 executing in thread
+--- 16.081499338150024 seconds ---
+User 006 executing in thread
+--- 65.60735392570496 seconds ---
+User 007 executing in thread
+--- 53.0990777015686 seconds ---
+User 008 executing in thread
+--- 16.170340061187744 seconds ---
+User 009 executing in thread
+--- 96.79089260101318 seconds ---
+User 010 executing in thread
+--- 34.54321885108948 seconds ---
+User 011 executing in thread
+--- 279.513010263443 seconds ---
+User 012 executing in thread
+--- 81.89975166320801 seconds ---
+User 013 executing in thread
+--- 74.21460175514221 seconds ---
+User 014 executing in thread
+--- 150.91536927223206 seconds ---
+User 015 executing in thread
+--- 26.429795503616333 seconds ---
+User 016 executing in thread
+--- 0.8500986099243164 seconds ---
+User 017 executing in thread
+--- 2.134859323501587 seconds ---
+User 018 executing in thread
+--- 41.46265888214111 seconds ---
+User 019 executing in thread
+--- 10.17439866065979 seconds ---
+User 020 executing in thread
+--- 52.72997736930847 seconds ---
+User 021 executing in thread
+--- 7.798879146575928 seconds ---
+User 022 executing in thread
+--- 3.0807132720947266 seconds ---
+User 023 executing in thread
+--- 5.461893558502197 seconds ---
+User 024 executing in thread
+--- 22.26263737678528 seconds ---
+User 025 executing in thread
+--- 105.59608054161072 seconds ---
+User 026 executing in thread
+--- 173.98199272155762 seconds ---
+User 027 executing in thread
+--- 6.886581897735596 seconds ---
+User 028 executing in thread
+--- 14.782880544662476 seconds ---
+User 029 executing in thread
+--- 0.9175510406494141 seconds ---
+User 030 executing in thread
+--- 53.46514582633972 seconds ---
+correct= 790
+incorrect = 560
+correct/incorrect = 0.5851851851851851
+TOTAL TIME: 1555.04101729393 seconds ---

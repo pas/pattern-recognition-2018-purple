@@ -1,0 +1,459 @@
+loading data, generating features
+normalizing features
+loading users
+done
+Processing...
+User 001 executing in thread
+User 001 Thread Processed 100 verification signatures.
+User 001 Thread Processed 200 verification signatures.
+User 001 Thread Processed 300 verification signatures.
+User 001 Thread Processed 400 verification signatures.
+User 001 Thread Processed 500 verification signatures.
+User 001 Thread Processed 600 verification signatures.
+User 001 Thread Processed 700 verification signatures.
+User 001 Thread Processed 800 verification signatures.
+User 001 Thread Processed 900 verification signatures.
+User 001 Thread Processed 1000 verification signatures.
+User 001 Thread Processed 1100 verification signatures.
+User 001 Thread Processed 1200 verification signatures.
+User 001 Thread Processed 1300 verification signatures.
+--- 160.0680549144745 seconds ---
+User 002 executing in thread
+User 002 Thread Processed 100 verification signatures.
+User 002 Thread Processed 200 verification signatures.
+User 002 Thread Processed 300 verification signatures.
+User 002 Thread Processed 400 verification signatures.
+User 002 Thread Processed 500 verification signatures.
+User 002 Thread Processed 600 verification signatures.
+User 002 Thread Processed 700 verification signatures.
+User 002 Thread Processed 800 verification signatures.
+User 002 Thread Processed 900 verification signatures.
+User 002 Thread Processed 1000 verification signatures.
+User 002 Thread Processed 1100 verification signatures.
+User 002 Thread Processed 1200 verification signatures.
+User 002 Thread Processed 1300 verification signatures.
+--- 317.49874663352966 seconds ---
+User 003 executing in thread
+User 003 Thread Processed 100 verification signatures.
+User 003 Thread Processed 200 verification signatures.
+User 003 Thread Processed 300 verification signatures.
+User 003 Thread Processed 400 verification signatures.
+User 003 Thread Processed 500 verification signatures.
+User 003 Thread Processed 600 verification signatures.
+User 003 Thread Processed 700 verification signatures.
+User 003 Thread Processed 800 verification signatures.
+User 003 Thread Processed 900 verification signatures.
+User 003 Thread Processed 1000 verification signatures.
+User 003 Thread Processed 1100 verification signatures.
+User 003 Thread Processed 1200 verification signatures.
+User 003 Thread Processed 1300 verification signatures.
+--- 941.4421408176422 seconds ---
+User 004 executing in thread
+User 004 Thread Processed 100 verification signatures.
+User 004 Thread Processed 200 verification signatures.
+User 004 Thread Processed 300 verification signatures.
+User 004 Thread Processed 400 verification signatures.
+User 004 Thread Processed 500 verification signatures.
+User 004 Thread Processed 600 verification signatures.
+User 004 Thread Processed 700 verification signatures.
+User 004 Thread Processed 800 verification signatures.
+User 004 Thread Processed 900 verification signatures.
+User 004 Thread Processed 1000 verification signatures.
+User 004 Thread Processed 1100 verification signatures.
+User 004 Thread Processed 1200 verification signatures.
+User 004 Thread Processed 1300 verification signatures.
+--- 426.73712515830994 seconds ---
+User 005 executing in thread
+User 005 Thread Processed 100 verification signatures.
+User 005 Thread Processed 200 verification signatures.
+User 005 Thread Processed 300 verification signatures.
+User 005 Thread Processed 400 verification signatures.
+User 005 Thread Processed 500 verification signatures.
+User 005 Thread Processed 600 verification signatures.
+User 005 Thread Processed 700 verification signatures.
+User 005 Thread Processed 800 verification signatures.
+User 005 Thread Processed 900 verification signatures.
+User 005 Thread Processed 1000 verification signatures.
+User 005 Thread Processed 1100 verification signatures.
+User 005 Thread Processed 1200 verification signatures.
+User 005 Thread Processed 1300 verification signatures.
+--- 317.5965974330902 seconds ---
+User 006 executing in thread
+User 006 Thread Processed 100 verification signatures.
+User 006 Thread Processed 200 verification signatures.
+User 006 Thread Processed 300 verification signatures.
+User 006 Thread Processed 400 verification signatures.
+User 006 Thread Processed 500 verification signatures.
+User 006 Thread Processed 600 verification signatures.
+User 006 Thread Processed 700 verification signatures.
+User 006 Thread Processed 800 verification signatures.
+User 006 Thread Processed 900 verification signatures.
+User 006 Thread Processed 1000 verification signatures.
+User 006 Thread Processed 1100 verification signatures.
+User 006 Thread Processed 1200 verification signatures.
+User 006 Thread Processed 1300 verification signatures.
+--- 774.3666818141937 seconds ---
+User 007 executing in thread
+User 007 Thread Processed 100 verification signatures.
+User 007 Thread Processed 200 verification signatures.
+User 007 Thread Processed 300 verification signatures.
+User 007 Thread Processed 400 verification signatures.
+User 007 Thread Processed 500 verification signatures.
+User 007 Thread Processed 600 verification signatures.
+User 007 Thread Processed 700 verification signatures.
+User 007 Thread Processed 800 verification signatures.
+User 007 Thread Processed 900 verification signatures.
+User 007 Thread Processed 1000 verification signatures.
+User 007 Thread Processed 1100 verification signatures.
+User 007 Thread Processed 1200 verification signatures.
+User 007 Thread Processed 1300 verification signatures.
+--- 559.8104367256165 seconds ---
+User 008 executing in thread
+User 008 Thread Processed 100 verification signatures.
+User 008 Thread Processed 200 verification signatures.
+User 008 Thread Processed 300 verification signatures.
+User 008 Thread Processed 400 verification signatures.
+User 008 Thread Processed 500 verification signatures.
+User 008 Thread Processed 600 verification signatures.
+User 008 Thread Processed 700 verification signatures.
+User 008 Thread Processed 800 verification signatures.
+User 008 Thread Processed 900 verification signatures.
+User 008 Thread Processed 1000 verification signatures.
+User 008 Thread Processed 1100 verification signatures.
+User 008 Thread Processed 1200 verification signatures.
+User 008 Thread Processed 1300 verification signatures.
+--- 361.94714617729187 seconds ---
+User 009 executing in thread
+User 009 Thread Processed 100 verification signatures.
+User 009 Thread Processed 200 verification signatures.
+User 009 Thread Processed 300 verification signatures.
+User 009 Thread Processed 400 verification signatures.
+User 009 Thread Processed 500 verification signatures.
+User 009 Thread Processed 600 verification signatures.
+User 009 Thread Processed 700 verification signatures.
+User 009 Thread Processed 800 verification signatures.
+User 009 Thread Processed 900 verification signatures.
+User 009 Thread Processed 1000 verification signatures.
+User 009 Thread Processed 1100 verification signatures.
+User 009 Thread Processed 1200 verification signatures.
+User 009 Thread Processed 1300 verification signatures.
+--- 1016.0520124435425 seconds ---
+User 010 executing in thread
+User 010 Thread Processed 100 verification signatures.
+User 010 Thread Processed 200 verification signatures.
+User 010 Thread Processed 300 verification signatures.
+User 010 Thread Processed 400 verification signatures.
+User 010 Thread Processed 500 verification signatures.
+User 010 Thread Processed 600 verification signatures.
+User 010 Thread Processed 700 verification signatures.
+User 010 Thread Processed 800 verification signatures.
+User 010 Thread Processed 900 verification signatures.
+User 010 Thread Processed 1000 verification signatures.
+User 010 Thread Processed 1100 verification signatures.
+User 010 Thread Processed 1200 verification signatures.
+User 010 Thread Processed 1300 verification signatures.
+--- 378.5343539714813 seconds ---
+User 011 executing in thread
+User 011 Thread Processed 100 verification signatures.
+User 011 Thread Processed 200 verification signatures.
+User 011 Thread Processed 300 verification signatures.
+User 011 Thread Processed 400 verification signatures.
+User 011 Thread Processed 500 verification signatures.
+User 011 Thread Processed 600 verification signatures.
+User 011 Thread Processed 700 verification signatures.
+User 011 Thread Processed 800 verification signatures.
+User 011 Thread Processed 900 verification signatures.
+User 011 Thread Processed 1000 verification signatures.
+User 011 Thread Processed 1100 verification signatures.
+User 011 Thread Processed 1200 verification signatures.
+User 011 Thread Processed 1300 verification signatures.
+--- 1208.6996202468872 seconds ---
+User 012 executing in thread
+User 012 Thread Processed 100 verification signatures.
+User 012 Thread Processed 200 verification signatures.
+User 012 Thread Processed 300 verification signatures.
+User 012 Thread Processed 400 verification signatures.
+User 012 Thread Processed 500 verification signatures.
+User 012 Thread Processed 600 verification signatures.
+User 012 Thread Processed 700 verification signatures.
+User 012 Thread Processed 800 verification signatures.
+User 012 Thread Processed 900 verification signatures.
+User 012 Thread Processed 1000 verification signatures.
+User 012 Thread Processed 1100 verification signatures.
+User 012 Thread Processed 1200 verification signatures.
+User 012 Thread Processed 1300 verification signatures.
+--- 541.2145519256592 seconds ---
+User 013 executing in thread
+User 013 Thread Processed 100 verification signatures.
+User 013 Thread Processed 200 verification signatures.
+User 013 Thread Processed 300 verification signatures.
+User 013 Thread Processed 400 verification signatures.
+User 013 Thread Processed 500 verification signatures.
+User 013 Thread Processed 600 verification signatures.
+User 013 Thread Processed 700 verification signatures.
+User 013 Thread Processed 800 verification signatures.
+User 013 Thread Processed 900 verification signatures.
+User 013 Thread Processed 1000 verification signatures.
+User 013 Thread Processed 1100 verification signatures.
+User 013 Thread Processed 1200 verification signatures.
+User 013 Thread Processed 1300 verification signatures.
+--- 711.2278597354889 seconds ---
+User 014 executing in thread
+User 014 Thread Processed 100 verification signatures.
+User 014 Thread Processed 200 verification signatures.
+User 014 Thread Processed 300 verification signatures.
+User 014 Thread Processed 400 verification signatures.
+User 014 Thread Processed 500 verification signatures.
+User 014 Thread Processed 600 verification signatures.
+User 014 Thread Processed 700 verification signatures.
+User 014 Thread Processed 800 verification signatures.
+User 014 Thread Processed 900 verification signatures.
+User 014 Thread Processed 1000 verification signatures.
+User 014 Thread Processed 1100 verification signatures.
+User 014 Thread Processed 1200 verification signatures.
+User 014 Thread Processed 1300 verification signatures.
+--- 1109.3716025352478 seconds ---
+User 015 executing in thread
+User 015 Thread Processed 100 verification signatures.
+User 015 Thread Processed 200 verification signatures.
+User 015 Thread Processed 300 verification signatures.
+User 015 Thread Processed 400 verification signatures.
+User 015 Thread Processed 500 verification signatures.
+User 015 Thread Processed 600 verification signatures.
+User 015 Thread Processed 700 verification signatures.
+User 015 Thread Processed 800 verification signatures.
+User 015 Thread Processed 900 verification signatures.
+User 015 Thread Processed 1000 verification signatures.
+User 015 Thread Processed 1100 verification signatures.
+User 015 Thread Processed 1200 verification signatures.
+User 015 Thread Processed 1300 verification signatures.
+--- 389.1594748497009 seconds ---
+User 016 executing in thread
+User 016 Thread Processed 100 verification signatures.
+User 016 Thread Processed 200 verification signatures.
+User 016 Thread Processed 300 verification signatures.
+User 016 Thread Processed 400 verification signatures.
+User 016 Thread Processed 500 verification signatures.
+User 016 Thread Processed 600 verification signatures.
+User 016 Thread Processed 700 verification signatures.
+User 016 Thread Processed 800 verification signatures.
+User 016 Thread Processed 900 verification signatures.
+User 016 Thread Processed 1000 verification signatures.
+User 016 Thread Processed 1100 verification signatures.
+User 016 Thread Processed 1200 verification signatures.
+User 016 Thread Processed 1300 verification signatures.
+--- 61.730769634246826 seconds ---
+User 017 executing in thread
+User 017 Thread Processed 100 verification signatures.
+User 017 Thread Processed 200 verification signatures.
+User 017 Thread Processed 300 verification signatures.
+User 017 Thread Processed 400 verification signatures.
+User 017 Thread Processed 500 verification signatures.
+User 017 Thread Processed 600 verification signatures.
+User 017 Thread Processed 700 verification signatures.
+User 017 Thread Processed 800 verification signatures.
+User 017 Thread Processed 900 verification signatures.
+User 017 Thread Processed 1000 verification signatures.
+User 017 Thread Processed 1100 verification signatures.
+User 017 Thread Processed 1200 verification signatures.
+User 017 Thread Processed 1300 verification signatures.
+--- 90.03060865402222 seconds ---
+User 018 executing in thread
+User 018 Thread Processed 100 verification signatures.
+User 018 Thread Processed 200 verification signatures.
+User 018 Thread Processed 300 verification signatures.
+User 018 Thread Processed 400 verification signatures.
+User 018 Thread Processed 500 verification signatures.
+User 018 Thread Processed 600 verification signatures.
+User 018 Thread Processed 700 verification signatures.
+User 018 Thread Processed 800 verification signatures.
+User 018 Thread Processed 900 verification signatures.
+User 018 Thread Processed 1000 verification signatures.
+User 018 Thread Processed 1100 verification signatures.
+User 018 Thread Processed 1200 verification signatures.
+User 018 Thread Processed 1300 verification signatures.
+--- 474.82037830352783 seconds ---
+User 019 executing in thread
+User 019 Thread Processed 100 verification signatures.
+User 019 Thread Processed 200 verification signatures.
+User 019 Thread Processed 300 verification signatures.
+User 019 Thread Processed 400 verification signatures.
+User 019 Thread Processed 500 verification signatures.
+User 019 Thread Processed 600 verification signatures.
+User 019 Thread Processed 700 verification signatures.
+User 019 Thread Processed 800 verification signatures.
+User 019 Thread Processed 900 verification signatures.
+User 019 Thread Processed 1000 verification signatures.
+User 019 Thread Processed 1100 verification signatures.
+User 019 Thread Processed 1200 verification signatures.
+User 019 Thread Processed 1300 verification signatures.
+--- 402.90071272850037 seconds ---
+User 020 executing in thread
+User 020 Thread Processed 100 verification signatures.
+User 020 Thread Processed 200 verification signatures.
+User 020 Thread Processed 300 verification signatures.
+User 020 Thread Processed 400 verification signatures.
+User 020 Thread Processed 500 verification signatures.
+User 020 Thread Processed 600 verification signatures.
+User 020 Thread Processed 700 verification signatures.
+User 020 Thread Processed 800 verification signatures.
+User 020 Thread Processed 900 verification signatures.
+User 020 Thread Processed 1000 verification signatures.
+User 020 Thread Processed 1100 verification signatures.
+User 020 Thread Processed 1200 verification signatures.
+User 020 Thread Processed 1300 verification signatures.
+--- 706.6819050312042 seconds ---
+User 021 executing in thread
+User 021 Thread Processed 100 verification signatures.
+User 021 Thread Processed 200 verification signatures.
+User 021 Thread Processed 300 verification signatures.
+User 021 Thread Processed 400 verification signatures.
+User 021 Thread Processed 500 verification signatures.
+User 021 Thread Processed 600 verification signatures.
+User 021 Thread Processed 700 verification signatures.
+User 021 Thread Processed 800 verification signatures.
+User 021 Thread Processed 900 verification signatures.
+User 021 Thread Processed 1000 verification signatures.
+User 021 Thread Processed 1100 verification signatures.
+User 021 Thread Processed 1200 verification signatures.
+User 021 Thread Processed 1300 verification signatures.
+--- 187.99214386940002 seconds ---
+User 022 executing in thread
+User 022 Thread Processed 100 verification signatures.
+User 022 Thread Processed 200 verification signatures.
+User 022 Thread Processed 300 verification signatures.
+User 022 Thread Processed 400 verification signatures.
+User 022 Thread Processed 500 verification signatures.
+User 022 Thread Processed 600 verification signatures.
+User 022 Thread Processed 700 verification signatures.
+User 022 Thread Processed 800 verification signatures.
+User 022 Thread Processed 900 verification signatures.
+User 022 Thread Processed 1000 verification signatures.
+User 022 Thread Processed 1100 verification signatures.
+User 022 Thread Processed 1200 verification signatures.
+User 022 Thread Processed 1300 verification signatures.
+--- 101.34910345077515 seconds ---
+User 023 executing in thread
+User 023 Thread Processed 100 verification signatures.
+User 023 Thread Processed 200 verification signatures.
+User 023 Thread Processed 300 verification signatures.
+User 023 Thread Processed 400 verification signatures.
+User 023 Thread Processed 500 verification signatures.
+User 023 Thread Processed 600 verification signatures.
+User 023 Thread Processed 700 verification signatures.
+User 023 Thread Processed 800 verification signatures.
+User 023 Thread Processed 900 verification signatures.
+User 023 Thread Processed 1000 verification signatures.
+User 023 Thread Processed 1100 verification signatures.
+User 023 Thread Processed 1200 verification signatures.
+User 023 Thread Processed 1300 verification signatures.
+--- 146.82037949562073 seconds ---
+User 024 executing in thread
+User 024 Thread Processed 100 verification signatures.
+User 024 Thread Processed 200 verification signatures.
+User 024 Thread Processed 300 verification signatures.
+User 024 Thread Processed 400 verification signatures.
+User 024 Thread Processed 500 verification signatures.
+User 024 Thread Processed 600 verification signatures.
+User 024 Thread Processed 700 verification signatures.
+User 024 Thread Processed 800 verification signatures.
+User 024 Thread Processed 900 verification signatures.
+User 024 Thread Processed 1000 verification signatures.
+User 024 Thread Processed 1100 verification signatures.
+User 024 Thread Processed 1200 verification signatures.
+User 024 Thread Processed 1300 verification signatures.
+--- 333.74923753738403 seconds ---
+User 025 executing in thread
+User 025 Thread Processed 100 verification signatures.
+User 025 Thread Processed 200 verification signatures.
+User 025 Thread Processed 300 verification signatures.
+User 025 Thread Processed 400 verification signatures.
+User 025 Thread Processed 500 verification signatures.
+User 025 Thread Processed 600 verification signatures.
+User 025 Thread Processed 700 verification signatures.
+User 025 Thread Processed 800 verification signatures.
+User 025 Thread Processed 900 verification signatures.
+User 025 Thread Processed 1000 verification signatures.
+User 025 Thread Processed 1100 verification signatures.
+User 025 Thread Processed 1200 verification signatures.
+User 025 Thread Processed 1300 verification signatures.
+--- 908.3728113174438 seconds ---
+User 026 executing in thread
+User 026 Thread Processed 100 verification signatures.
+User 026 Thread Processed 200 verification signatures.
+User 026 Thread Processed 300 verification signatures.
+User 026 Thread Processed 400 verification signatures.
+User 026 Thread Processed 500 verification signatures.
+User 026 Thread Processed 600 verification signatures.
+User 026 Thread Processed 700 verification signatures.
+User 026 Thread Processed 800 verification signatures.
+User 026 Thread Processed 900 verification signatures.
+User 026 Thread Processed 1000 verification signatures.
+User 026 Thread Processed 1100 verification signatures.
+User 026 Thread Processed 1200 verification signatures.
+User 026 Thread Processed 1300 verification signatures.
+--- 1244.0249209403992 seconds ---
+User 027 executing in thread
+User 027 Thread Processed 100 verification signatures.
+User 027 Thread Processed 200 verification signatures.
+User 027 Thread Processed 300 verification signatures.
+User 027 Thread Processed 400 verification signatures.
+User 027 Thread Processed 500 verification signatures.
+User 027 Thread Processed 600 verification signatures.
+User 027 Thread Processed 700 verification signatures.
+User 027 Thread Processed 800 verification signatures.
+User 027 Thread Processed 900 verification signatures.
+User 027 Thread Processed 1000 verification signatures.
+User 027 Thread Processed 1100 verification signatures.
+User 027 Thread Processed 1200 verification signatures.
+User 027 Thread Processed 1300 verification signatures.
+--- 188.89961743354797 seconds ---
+User 028 executing in thread
+User 028 Thread Processed 100 verification signatures.
+User 028 Thread Processed 200 verification signatures.
+User 028 Thread Processed 300 verification signatures.
+User 028 Thread Processed 400 verification signatures.
+User 028 Thread Processed 500 verification signatures.
+User 028 Thread Processed 600 verification signatures.
+User 028 Thread Processed 700 verification signatures.
+User 028 Thread Processed 800 verification signatures.
+User 028 Thread Processed 900 verification signatures.
+User 028 Thread Processed 1000 verification signatures.
+User 028 Thread Processed 1100 verification signatures.
+User 028 Thread Processed 1200 verification signatures.
+User 028 Thread Processed 1300 verification signatures.
+--- 271.89700293540955 seconds ---
+User 029 executing in thread
+User 029 Thread Processed 100 verification signatures.
+User 029 Thread Processed 200 verification signatures.
+User 029 Thread Processed 300 verification signatures.
+User 029 Thread Processed 400 verification signatures.
+User 029 Thread Processed 500 verification signatures.
+User 029 Thread Processed 600 verification signatures.
+User 029 Thread Processed 700 verification signatures.
+User 029 Thread Processed 800 verification signatures.
+User 029 Thread Processed 900 verification signatures.
+User 029 Thread Processed 1000 verification signatures.
+User 029 Thread Processed 1100 verification signatures.
+User 029 Thread Processed 1200 verification signatures.
+User 029 Thread Processed 1300 verification signatures.
+--- 108.12901544570923 seconds ---
+User 030 executing in thread
+User 030 Thread Processed 100 verification signatures.
+User 030 Thread Processed 200 verification signatures.
+User 030 Thread Processed 300 verification signatures.
+User 030 Thread Processed 400 verification signatures.
+User 030 Thread Processed 500 verification signatures.
+User 030 Thread Processed 600 verification signatures.
+User 030 Thread Processed 700 verification signatures.
+User 030 Thread Processed 800 verification signatures.
+User 030 Thread Processed 900 verification signatures.
+User 030 Thread Processed 1000 verification signatures.
+User 030 Thread Processed 1100 verification signatures.
+User 030 Thread Processed 1200 verification signatures.
+User 030 Thread Processed 1300 verification signatures.
+--- 696.4016525745392 seconds ---
+correct= 22516
+incorrect = 17984
+correct/incorrect = 0.5559506172839506
+TOTAL TIME: 15143.562384843826 seconds ---
