@@ -35,7 +35,7 @@ class Tests(unittest.TestCase):
     self.assertEqual( metrics.precision() , 1 )
     
     res = [ True , True , False , True , False ]
-    recall, precision = Metrics.plot_recall_precision( res )
+    recall, precision = Metrics.plot_recall_precision( res , "any" , "any.png" )
     
     numpy.testing.assert_array_equal( recall , [ 1/3 , 2/3 , 2/3 , 1 , 1 ] )
     numpy.testing.assert_array_equal( precision , [ 1 , 1 , 2/3 , 3/4 , 3/5 ] )
