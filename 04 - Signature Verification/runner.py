@@ -15,7 +15,10 @@ total_time = time.time()
 enrollment_signatures = []
 verification_signatures = []
 
-pathToProvidedData = "SignatureVerification/"
+# This path was used during the development.
+#pathToProvidedData = "SignatureVerification/"
+# This path is used for the evaluation.
+pathToProvidedData = "Evaluation/TestSignatures/"
 pathToEnrollmentData = pathToProvidedData + "enrollment/"
 pathToVerificationData = pathToProvidedData + "verification/"
 
@@ -87,12 +90,12 @@ signature_directory = "signatures"
 if not os.path.exists(signature_directory):
     os.makedirs(signature_directory)
 
-with Pool(processes=2) as pool:
+with Pool(processes=4) as pool:
     results = pool.map(calculateUserDistances, users)
     for resultTxt in results:
         signatures_file = open(signature_directory + "/signatures-" + resultTxt[0:3] + ".txt", "w")
         signatures_file.write(resultTxt + "\n")
-        signatures_file.close();
+        signatures_file.close()
     
 true_positive = 0
 true_negative = 0
@@ -134,3 +137,29 @@ print("recall = " + str(true_positive / (true_positive + false_negative)))
 print("\n")
 
 print("TOTAL TIME: %s seconds ---" % (time.time() - total_time))
+
+# Generating the expected output file for the evaluation.
+expected_output = open("Evaluation/results_signature.txt", "w")
+for file in os.listdir(signature_directory):
+    user_result = ""
+    signatures_file = open(signature_directory + "/" + file, "r")
+    for line in signatures_file:
+        line_split = line.split(",")
+        if(len(line_split) < 2):
+            if "===" in line_split[0]:
+                continue
+            elif ("\n" == line_split[0]):
+                # Arrived at the end of file
+                break
+            else:
+                user_result = "user"+str(line_split[0][:-1])+", "
+        else:
+            signature_result = "signature_"+line_split[0].split("-")[1]
+            dissimilarity_result = line_split[1]
+            user_result = user_result+str(signature_result) + "," + str(dissimilarity_result) + ", "
+    # Remove the last comma and space
+    expected_output.write(str(user_result[:-2]) + "\n")
+    #expected_output.seek(-2, os.SEEK_CUR)
+    #expected_output.truncate()
+    #expected_output.write("\n")
+expected_output.close()
