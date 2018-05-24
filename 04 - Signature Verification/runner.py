@@ -42,11 +42,11 @@ verification_features = Features().generate_features(verification_raw_data)
 #verification_features["001-01.txt"]
 
 # get ground truth with classes g/f
-ground_truth = Parser.get_ground_truth(pathToProvidedData + "/gt.txt")
+#ground_truth = Parser.get_ground_truth(pathToProvidedData + "/gt.txt")
 #ground_truth '030-45.txt': 'g'
 
 # get ground truth with classes True/False (True <-> "g", False <-> "f")
-ground_truth_boolean = Parser.get_ground_truth(pathToProvidedData + "/gt.txt", use_boolean=True)
+#ground_truth_boolean = Parser.get_ground_truth(pathToProvidedData + "/gt.txt", use_boolean=True)
 #ground_truth_boolean '030-45.txt': 'True'
 
 # normalize enrolment and verification features
@@ -85,7 +85,10 @@ def calculateUserDistances(users_index):
     print("--- %s seconds ---" % (time.time() - start_time))
     return output.print_dissimilarities(users_index, dissimilarities) + "\n" 
     
-signature_directory = "signatures"
+# This path was used during the development.
+#signature_directory = "signatures"
+# This path is used for the evaluation.
+signature_directory = "evaluationSignatures"
 
 if not os.path.exists(signature_directory):
     os.makedirs(signature_directory)
@@ -97,7 +100,7 @@ with Pool(processes=4) as pool:
         signatures_file.write(resultTxt + "\n")
         signatures_file.close()
     
-true_positive = 0
+""" true_positive = 0
 true_negative = 0
 false_positive = 0
 false_negative = 0
@@ -135,12 +138,12 @@ print("\n")
 print("precision = " + str(true_positive / (true_positive + false_positive)))
 print("recall = " + str(true_positive / (true_positive + false_negative)))
 print("\n")
-
+ """
 print("TOTAL TIME: %s seconds ---" % (time.time() - total_time))
 
 # Generating the expected output file for the evaluation.
 expected_output = open("Evaluation/results_signature.txt", "w")
-for file in os.listdir(signature_directory):
+for file in sorted(os.listdir(signature_directory)):
     user_result = ""
     signatures_file = open(signature_directory + "/" + file, "r")
     for line in signatures_file:
