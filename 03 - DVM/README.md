@@ -11,6 +11,11 @@ Some changes were necesseary to adapt our program to output the correct format. 
 
 During the validation we recognized a mature flaw in our code. When constructing the feature vectors the image was not scanned from left to right but from top to bottom. As well we missed out to normalize the features. A small change in the image.py file was done to correct the issue of wrong scanning. As well the features were normalize in image.py. We adapted as well the sakoe-chiba bandwith.
 
+### Quick fix for ID problem
+This was already done for the current data so the validation-output.txt holds the correct ids! 
+
+The ids are wrongly named after the validation-output.txt is created. If you recreate the data you can use rename-ids.py to create a new file called validation-output-ids.txt with the correct ids. 
+
 ## Prerequisites
 
 This project runs on python3
